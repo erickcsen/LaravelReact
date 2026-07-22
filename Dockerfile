@@ -1,36 +1,42 @@
-FROM php:8.3-apache
+FROM php:8.3-cli
 
-# Install dependency
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
-    git unzip zip curl \
+    git \
+    curl \
+    unzip \
+    zip \
     libzip-dev \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
-    nodejs npm \
+    nodejs \
+    npm \
     && docker-php-ext-install pdo pdo_mysql zip
 
 # Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-WORKDIR /var/www/html
+WORKDIR /var/www
 
+# Copy project
 COPY . .
 
-# Install Laravel
+# Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Install React/Vite
+# Install Node dependencies & build React/Vite
 RUN npm install
 RUN npm run build
 
+# Laravel optimization
+RUN php artisan config:cache || true
+RUN php artisan route:cache || true
+RUN php artisan view:cache || true
+
 # Permission
-RUN chown -R www-data:www-data storage bootstrap/cache
+RUN chmod -R 775 storage bootstrap/cache
 
-# Apache
-RUN a2enmod rewrite
-COPY .docker/vhost.conf /etc/apache2/sites-available/000-default.conf
+EXPOSE 10000
 
-EXPOSE 80
-
-CMD ["apache2-foreground"]
+CMD ["sh", "-c", "php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=${PORT:-10000}"]

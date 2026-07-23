@@ -13,6 +13,10 @@
     @vite('resources/js/app.jsx')
 
     <style>
+        .myNavbar .navbar-toggler{
+            font-size:10px;
+            padding:10px;
+        }
         .blurBackground{
             filter: blur(8px);
         }

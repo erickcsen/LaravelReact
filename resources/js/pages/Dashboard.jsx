@@ -1,15 +1,16 @@
 import Carousel from 'react-bootstrap/Carousel';
 
-import Navbar from './Layouts/Navbar';
+import Navbar from './Layouts/NavbarMenu';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import CardGroup from 'react-bootstrap/CardGroup';
+import Col from 'react-bootstrap/Col';
 
 export default function Dashboard() {
     return (
         <>
             <Navbar />
-            <div className='container' style={{ paddingTop: "50px" }}>
+            <div className='container'>
                 <div className='col-xs-12 carouselSlider'>
                     <Carousel>
                         <Carousel.Item>
@@ -57,8 +58,8 @@ export default function Dashboard() {
                 </div>
                 <div className='col-xs-12 mt-3'>
                     <CardGroup>
-                        <div className='px-1 py-1'>
-                            <Card style={{ width: '18rem', margin:"0 auto" }}>
+                        <Col key={1}>
+                            <Card style={{ width: '18rem', margin:"0 auto", marginBottom:"10px" }}>
                                 <Card.Img variant="top" src="https://png.pngtree.com/thumb_back/fh260/background/20241007/pngtree-messi-dribbling-past-defenders-with-ronaldo-sprinting-in-support-dynamic-soccer-image_16307791.jpg" height="190px" />
                                 <Card.Body>
                                     <Card.Title>Card Title</Card.Title>
@@ -69,9 +70,9 @@ export default function Dashboard() {
                                     <Button variant="primary">Go somewhere</Button>
                                 </Card.Body>
                             </Card>
-                        </div>
-                        <div className='px-1 py-1'>
-                            <Card style={{ width: '18rem', margin:"0 auto" }}>
+                        </Col>
+                        <Col key={2}>
+                            <Card style={{ width: '18rem', margin:"0 auto", marginBottom:"10px" }}>
                                 <Card.Img variant="top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8jLMjAwiaFfRi84hSMwIVT5f2F86Mof2AX7Wj8-8pRGbNGrvByQ-V6KnR&s=10" height="190px"/>
                                 <Card.Body>
                                     <Card.Title>Card Title</Card.Title>
@@ -82,9 +83,9 @@ export default function Dashboard() {
                                     <Button variant="primary">Go somewhere</Button>
                                 </Card.Body>
                             </Card>
-                        </div>
-                        <div className='px-1 py-1'>
-                            <Card style={{ width: '18rem', margin:"0 auto" }}>
+                        </Col>
+                        <Col key={3}>
+                            <Card style={{ width: '18rem', margin:"0 auto", marginBottom:"10px" }}>
                                 <Card.Img variant="top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaMA-rjC0vCjXBQ-cXYoFjCDsOWZrLMuW2zZgWvSlDqJafe7a5ApNlx0o&s=10" height="190px"/>
                                 <Card.Body>
                                     <Card.Title>Card Title</Card.Title>
@@ -95,7 +96,7 @@ export default function Dashboard() {
                                     <Button variant="primary">Go somewhere</Button>
                                 </Card.Body>
                             </Card>
-                        </div>
+                        </Col>
                     </CardGroup>
                 </div>
             </div>

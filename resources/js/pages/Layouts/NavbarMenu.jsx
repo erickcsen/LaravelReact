@@ -34,7 +34,7 @@ export default function NavbarMenu() {
                                 className="d-inline-block align-top"
                                 alt="Logo Website"
                             /> &nbsp;
-                            {website_name}
+                            {/* {website_name} */}
                         </Navbar.Brand>
 
                         <Navbar.Offcanvas

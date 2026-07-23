@@ -9,8 +9,9 @@ use App\Http\Controllers\UserController;
 //     return view('app', ["title"=>$title, "pagename"=>"Welcome"]);
 // });
 
+Route::get('/', [DashboardController::class, "show"]);
+
 Route::middleware('guest')->group(function () {
-    Route::get('/', [DashboardController::class, "show"]);
     Route::get('/login', [UserController::class, "login"]);
     Route::get('/register', [UserController::class, "register"]);
 });

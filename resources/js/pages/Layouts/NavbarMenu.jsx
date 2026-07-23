@@ -50,7 +50,7 @@ export default function NavbarMenu() {
                             </Offcanvas.Header>
                             <Offcanvas.Body>
                                 <Nav className="justify-content-start flex-grow-1 ps-3">
-                                    <Nav.Link href="#action1">Home</Nav.Link>
+                                    <Nav.Link href="/">Home</Nav.Link>
                                     <Nav.Link href="#action2">Link</Nav.Link>
                                     <NavDropdown
                                         title="Dropdown"

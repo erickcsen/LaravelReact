@@ -3,6 +3,7 @@ import Carousel from 'react-bootstrap/Carousel';
 import Navbar from './Layouts/Navbar';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import CardGroup from 'react-bootstrap/CardGroup';
 
 export default function Dashboard() {
     return (
@@ -10,7 +11,6 @@ export default function Dashboard() {
             <Navbar />
             <div className='container' style={{ paddingTop: "50px" }}>
                 <div className='col-xs-12 carouselSlider'>
-
                     <Carousel>
                         <Carousel.Item>
                             <div className='d-none d-md-block w-100 blurBackground' style={{backgroundSize:"100% auto",backgroundPosition:"center",backgroundImage:"url(https://png.pngtree.com/thumb_back/fh260/background/20241007/pngtree-messi-dribbling-past-defenders-with-ronaldo-sprinting-in-support-dynamic-soccer-image_16307791.jpg)",backgroundRepeat:"no-repeat",height:"400px"}}>
@@ -55,19 +55,49 @@ export default function Dashboard() {
                         </Carousel.Item>
                     </Carousel>
                 </div>
-            </div>
-            <div className='col-xs-12'>
-                <Card style={{ width: '18rem' }}>
-                    <Card.Img variant="top" src="https://png.pngtree.com/thumb_back/fh260/background/20241007/pngtree-messi-dribbling-past-defenders-with-ronaldo-sprinting-in-support-dynamic-soccer-image_16307791.jpg" />
-                    <Card.Body>
-                        <Card.Title>Card Title</Card.Title>
-                        <Card.Text>
-                        Some quick example text to build on the card title and make up the
-                        bulk of the card's content.
-                        </Card.Text>
-                        <Button variant="primary">Go somewhere</Button>
-                    </Card.Body>
-                </Card>
+                <div className='col-xs-12 mt-3'>
+                    <CardGroup>
+                        <div className='px-1 py-1'>
+                            <Card style={{ width: '18rem', margin:"0 auto" }}>
+                                <Card.Img variant="top" src="https://png.pngtree.com/thumb_back/fh260/background/20241007/pngtree-messi-dribbling-past-defenders-with-ronaldo-sprinting-in-support-dynamic-soccer-image_16307791.jpg" height="190px" />
+                                <Card.Body>
+                                    <Card.Title>Card Title</Card.Title>
+                                    <Card.Text>
+                                    Some quick example text to build on the card title and make up the
+                                    bulk of the card's content.
+                                    </Card.Text>
+                                    <Button variant="primary">Go somewhere</Button>
+                                </Card.Body>
+                            </Card>
+                        </div>
+                        <div className='px-1 py-1'>
+                            <Card style={{ width: '18rem', margin:"0 auto" }}>
+                                <Card.Img variant="top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8jLMjAwiaFfRi84hSMwIVT5f2F86Mof2AX7Wj8-8pRGbNGrvByQ-V6KnR&s=10" height="190px"/>
+                                <Card.Body>
+                                    <Card.Title>Card Title</Card.Title>
+                                    <Card.Text>
+                                    Some quick example text to build on the card title and make up the
+                                    bulk of the card's content.
+                                    </Card.Text>
+                                    <Button variant="primary">Go somewhere</Button>
+                                </Card.Body>
+                            </Card>
+                        </div>
+                        <div className='px-1 py-1'>
+                            <Card style={{ width: '18rem', margin:"0 auto" }}>
+                                <Card.Img variant="top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaMA-rjC0vCjXBQ-cXYoFjCDsOWZrLMuW2zZgWvSlDqJafe7a5ApNlx0o&s=10" height="190px"/>
+                                <Card.Body>
+                                    <Card.Title>Card Title</Card.Title>
+                                    <Card.Text>
+                                    Some quick example text to build on the card title and make up the
+                                    bulk of the card's content.
+                                    </Card.Text>
+                                    <Button variant="primary">Go somewhere</Button>
+                                </Card.Body>
+                            </Card>
+                        </div>
+                    </CardGroup>
+                </div>
             </div>
         </>
     );

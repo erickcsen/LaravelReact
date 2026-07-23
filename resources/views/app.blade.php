@@ -9,9 +9,6 @@
     <script
         src="https://cdn.jsdelivr.net/npm/react-dom/umd/react-dom.production.min.js"
         crossorigin></script>
-    <script
-        src="https://cdn.jsdelivr.net/npm/react-bootstrap@next/dist/react-bootstrap.min.js"
-        crossorigin></script>
 
     @vite('resources/js/app.jsx')
 

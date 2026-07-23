@@ -12,6 +12,7 @@ use App\Http\Controllers\UserController;
 Route::middleware('guest')->group(function () {
     Route::get('/', [DashboardController::class, "show"]);
     Route::get('/login', [UserController::class, "login"]);
+    Route::get('/register', [UserController::class, "register"]);
 });
 
 Route::fallback(function () {

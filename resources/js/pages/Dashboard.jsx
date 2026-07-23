@@ -7,11 +7,16 @@ export default function Dashboard() {
         <>
             <Navbar />
             <div className='container' style={{ paddingTop: "50px" }}>
-                <div className='col-xs-12'>
+                <div className='col-xs-12 carouselSlider'>
 
                     <Carousel>
                         <Carousel.Item>
-                            <div className='d-block w-100' style={{backgroundSize:"auto 100%",backgroundPosition:"center",backgroundImage:"url(https://png.pngtree.com/thumb_back/fh260/background/20241007/pngtree-messi-dribbling-past-defenders-with-ronaldo-sprinting-in-support-dynamic-soccer-image_16307791.jpg)",height:"400px"}}></div>
+                            <div className='d-none d-md-block w-100 blurBackground' style={{backgroundSize:"100% auto",backgroundPosition:"center",backgroundImage:"url(https://png.pngtree.com/thumb_back/fh260/background/20241007/pngtree-messi-dribbling-past-defenders-with-ronaldo-sprinting-in-support-dynamic-soccer-image_16307791.jpg)",backgroundRepeat:"no-repeat",height:"400px"}}>
+                            </div>
+                            <div className='d-none d-md-block w-100 noneBlurBg' style={{backgroundSize:"auto 100%",backgroundPosition:"center",backgroundImage:"url(https://png.pngtree.com/thumb_back/fh260/background/20241007/pngtree-messi-dribbling-past-defenders-with-ronaldo-sprinting-in-support-dynamic-soccer-image_16307791.jpg)",backgroundRepeat:"no-repeat",height:"400px"}}>
+                            </div>
+                            <div className='d-block d-md-none w-100' style={{backgroundSize:"auto 100%",backgroundPosition:"center",backgroundImage:"url(https://png.pngtree.com/thumb_back/fh260/background/20241007/pngtree-messi-dribbling-past-defenders-with-ronaldo-sprinting-in-support-dynamic-soccer-image_16307791.jpg)",backgroundRepeat:"no-repeat",height:"250px"}}>
+                            </div>
 
                             <Carousel.Caption>
                                 <h3 style={{textShadow:"0px 0px 10px black"}}>Slide Pertama</h3>
@@ -20,7 +25,12 @@ export default function Dashboard() {
                         </Carousel.Item>
 
                         <Carousel.Item>
-                            <div className='d-block w-100' style={{backgroundSize:"auto 100%",backgroundPosition:"center",backgroundImage:"url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8jLMjAwiaFfRi84hSMwIVT5f2F86Mof2AX7Wj8-8pRGbNGrvByQ-V6KnR&s=10",height:"400px"}}></div>
+                            <div className='d-none d-md-block w-100 blurBackground' style={{backgroundSize:"100% auto",backgroundPosition:"center",backgroundImage:"url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8jLMjAwiaFfRi84hSMwIVT5f2F86Mof2AX7Wj8-8pRGbNGrvByQ-V6KnR&s=10",backgroundRepeat:"no-repeat",height:"400px"}}>
+                            </div>
+                            <div className='d-none d-md-block w-100 noneBlurBg' style={{backgroundSize:"auto 100%",backgroundPosition:"center",backgroundImage:"url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8jLMjAwiaFfRi84hSMwIVT5f2F86Mof2AX7Wj8-8pRGbNGrvByQ-V6KnR&s=10",backgroundRepeat:"no-repeat",height:"400px"}}>
+                            </div>
+                            <div className='d-block d-md-none w-100' style={{backgroundSize:"auto 100%",backgroundPosition:"center",backgroundImage:"url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8jLMjAwiaFfRi84hSMwIVT5f2F86Mof2AX7Wj8-8pRGbNGrvByQ-V6KnR&s=10",backgroundRepeat:"no-repeat",height:"250px"}}>
+                            </div>
 
                             <Carousel.Caption>
                                 <h3 style={{textShadow:"0px 0px 10px black"}}>Slide Kedua</h3>
@@ -29,7 +39,12 @@ export default function Dashboard() {
                         </Carousel.Item>
 
                         <Carousel.Item>
-                            <div className='d-block w-100' style={{backgroundSize:"auto 100%",backgroundPosition:"center",backgroundImage:"url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaMA-rjC0vCjXBQ-cXYoFjCDsOWZrLMuW2zZgWvSlDqJafe7a5ApNlx0o&s=10')",height:"400px"}}></div>
+                            <div className='d-none d-md-block w-100 blurBackground' style={{backgroundSize:"100% auto",backgroundPosition:"center",backgroundImage:"url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaMA-rjC0vCjXBQ-cXYoFjCDsOWZrLMuW2zZgWvSlDqJafe7a5ApNlx0o&s=10')",backgroundRepeat:"no-repeat",height:"400px"}}>
+                            </div>
+                            <div className='d-none d-md-block w-100 noneBlurBg' style={{backgroundSize:"auto 100%",backgroundPosition:"center",backgroundImage:"url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaMA-rjC0vCjXBQ-cXYoFjCDsOWZrLMuW2zZgWvSlDqJafe7a5ApNlx0o&s=10')",backgroundRepeat:"no-repeat",height:"400px"}}>
+                            </div>
+                            <div className='d-block d-md-none w-100' style={{backgroundSize:"auto 100%",backgroundPosition:"center",backgroundImage:"url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaMA-rjC0vCjXBQ-cXYoFjCDsOWZrLMuW2zZgWvSlDqJafe7a5ApNlx0o&s=10')",backgroundRepeat:"no-repeat",height:"250px"}}>
+                            </div>
 
                             <Carousel.Caption>
                                 <h3 style={{textShadow:"0px 0px 10px black"}}>Slide Ketiga</h3>

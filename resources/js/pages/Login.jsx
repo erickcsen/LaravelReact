@@ -36,7 +36,7 @@ export default function Login() {
                             </div>
 
                             <h3 className="text-center mb-4">
-                                {websiteName}
+                                Login
                             </h3>
 
                             {/* Email */}

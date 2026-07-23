@@ -14,6 +14,7 @@ Route::get('/', [DashboardController::class, "show"]);
 Route::middleware('guest')->group(function () {
     Route::get('/login', [UserController::class, "login"]);
     Route::get('/register', [UserController::class, "register"]);
+    Route::post('/register', [UserController::class, "store"]);
 });
 
 Route::fallback(function () {

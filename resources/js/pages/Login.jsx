@@ -23,7 +23,7 @@ export default function Login() {
 
             <Container className="mt-5">
                 <Row className="justify-content-center">
-                    <Col md={5} lg={4}>
+                    <Col md={6} lg={5} xl={4}>
                         <div className="border rounded p-4 shadow-sm">
 
                             <div className="text-center mb-3">

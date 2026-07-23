@@ -4,9 +4,10 @@ import Welcome from './Welcome';
 import Dashboard from './Dashboard';
 import Navbar from './Layouts/NavbarMenu';
 import Login from './Login';
+import Register from './Register';
 
 const pages = {
-    Welcome, Dashboard, Login
+    Welcome, Dashboard, Login, Register
 };
 
 export default function Page({pagename}) {

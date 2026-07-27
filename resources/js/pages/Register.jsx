@@ -7,9 +7,9 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
 
-
 import Toast from "react-bootstrap/Toast";
 import ToastContainer from "react-bootstrap/ToastContainer";
+import { Link } from 'react-router-dom';
 
 export default function Register() {
     const [form, setForm] = useState({
@@ -155,7 +155,7 @@ export default function Register() {
                                 </Button>
 
                                 <div className="text-center mt-3">
-                                    Sudah punya akun? <a as={Link} to="/login">Login</a>
+                                    Sudah punya akun? <Link to="/login">Login</Link>
                                 </div>
                             </Form>
                         </div>

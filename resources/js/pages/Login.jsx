@@ -5,6 +5,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
+import { Link } from 'react-router-dom';
 
 export default function Login() {
     const logoWebsite =
@@ -79,9 +80,9 @@ export default function Login() {
                                         ></i>
                                     </Button>
                                 </div>
-                                <a className="float-end mb-3">
+                                <Link to="/forgot-password" className="float-end mb-3">
                                     Lupa Password
-                                </a>
+                                </Link>
                             </Form.Group>
 
                             <Button variant="primary" className="w-100 mb-3">
@@ -93,9 +94,9 @@ export default function Login() {
                                 <span style={{background:"white",padding:"10px"}}>atau</span>
                             </p>
                             <p align="center">
-                                Belum punya akun ? <a as={Link} to="/register">
+                                Belum punya akun ? <Link to="/register">
                                     Buat Akun
-                                </a>
+                                </Link>
                             </p>
                         </div>
                     </Col>

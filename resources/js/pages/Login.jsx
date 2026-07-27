@@ -93,7 +93,7 @@ export default function Login() {
                                 <span style={{background:"white",padding:"10px"}}>atau</span>
                             </p>
                             <p align="center">
-                                Belum punya akun ? <a href="/register">
+                                Belum punya akun ? <a as={Link} to="/register">
                                     Buat Akun
                                 </a>
                             </p>

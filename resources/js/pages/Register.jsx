@@ -155,7 +155,7 @@ export default function Register() {
                                 </Button>
 
                                 <div className="text-center mt-3">
-                                    Sudah punya akun? <a href="/login">Login</a>
+                                    Sudah punya akun? <a as={Link} to="/login">Login</a>
                                 </div>
                             </Form>
                         </div>

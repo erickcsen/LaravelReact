@@ -1,12 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import Page from './pages/Page';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import Page from "./pages/Page";
 
-let app = document.getElementById('app');
-let pagename = app.dataset.page;
-console.log(document.getElementById('app').dataset.page);
+const app = document.getElementById("app");
+const pagename = app.dataset.page;
+
 ReactDOM.createRoot(app).render(
     <React.StrictMode>
-        <Page pagename={pagename} />
+        <BrowserRouter>
+            <Page pagename={pagename} />
+        </BrowserRouter>
     </React.StrictMode>
 );

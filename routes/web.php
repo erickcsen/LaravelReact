@@ -38,6 +38,6 @@ Route::get('/auth/check', function () {
 
 Route::middleware('auth:sanctum')->post('/logout', [UserController::class, 'logOut']);
 
-// Route::fallback(function () {
-//     return response()->view('app', ["title"=>"Page - Not Found", "pagename"=>"404"]);
-// });
+Route::fallback(function () {
+    return response()->view('app', ["title"=>"Page - Not Found", "pagename"=>"404"]);
+});

@@ -125,6 +125,9 @@ export default function NavbarMenu() {
                                     <Nav.Link as={Link} to="/articles" className='ps-3 rounded-3 hover-menu'>
                                         Articles
                                     </Nav.Link>
+                                    <Nav.Link as={Link} to="/movies" className='ps-3 rounded-3 hover-menu'>
+                                        Movies
+                                    </Nav.Link>
                                     <NavDropdown
                                         title="Master Data"
                                         id={`offcanvasNavbarDropdown-expand-${expand}`}
@@ -135,6 +138,9 @@ export default function NavbarMenu() {
                                         </NavDropdown.Item>
                                         <NavDropdown.Item as={Link} to="/master-categories">
                                             Master Categories
+                                        </NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} to="/master-movies">
+                                            Master Movies
                                         </NavDropdown.Item>
                                     </NavDropdown>
                                     <div className='d-block d-md-none'>&nbsp;</div>

@@ -9,9 +9,10 @@ import axios from "axios";
 
 import Toast from "react-bootstrap/Toast";
 import ToastContainer from "react-bootstrap/ToastContainer";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Register() {
+    const navigate = useNavigate();
     useEffect(() => {
         document.title = "Register";
     }, []);
@@ -32,6 +33,7 @@ export default function Register() {
 
             setShowToast(true);
             setErrors({});
+            navigate("/login");
         } catch (error) {
             console.log(error);
             console.log(error.response.data);

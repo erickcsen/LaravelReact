@@ -131,7 +131,7 @@ export default function NavbarMenu() {
                                     <NavDropdown
                                         title="Master Data"
                                         id={`offcanvasNavbarDropdown-expand-${expand}`}
-                                        className='ps-3 rounded-3 hover-menu'
+                                        className={(window.AppData.user)?"ps-3 rounded-3 hover-menu d-md-inline d-none":"d-none"}
                                     >
                                         <NavDropdown.Item as={Link} to="/master-articles">
                                             Master Articles

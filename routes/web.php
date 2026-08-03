@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('/', [DashboardController::class, "show"]);
 
+Route::post('/signIn', [UserController::class,'signIn']);
 Route::middleware('guest')->group(function () {
     Route::get('/login', [UserController::class, "login"]);
-    Route::post('/signIn', [UserController::class,'signIn']);
     Route::get('/register', [UserController::class, "register"]);
     Route::post('/register', [UserController::class, "store"]);
 });
@@ -36,6 +36,9 @@ Route::get('/auth/check', function () {
     ]);
 });
 
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
 
 Route::fallback(function () {
     return response()->view('app', ["title"=>"Page - Not Found", "pagename"=>"404"]);

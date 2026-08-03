@@ -23,20 +23,22 @@ class UserController extends Controller
      */
     public function signIn(Request $request) {
         $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
+            'email' => 'required|email',
+            'password' => 'required',
         ]);
 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            return ["message"=>"Login berhasil"];
+        if (!Auth::attempt($credentials)) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Invalid credentials'
+            ], 401);
         }
 
-        return back()->withErrors([
-            'email' => 'Email atau password salah.',
-        ])->onlyInput('email');
+        $request->session()->regenerate();
 
-        /** */
+        return response()->json([
+            'user' => Auth::user()
+        ]);
     }
 
     /**
@@ -67,5 +69,17 @@ class UserController extends Controller
         $user->sendEmailVerificationNotification();
 
         return redirect('/login')->with('success', 'Register berhasil.');
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return response()->json([
+            'message' => 'Logged out'
+        ]);
     }
 }

@@ -8,7 +8,7 @@ import Form from "react-bootstrap/Form";
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect } from "react";
 
-import axios from "../axios";
+import api from "../api";
 import Toast from "react-bootstrap/Toast";
 import ToastContainer from "react-bootstrap/ToastContainer";
 
@@ -38,9 +38,9 @@ export default function Login() {
     const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        await api.get("/sanctum/csrf-cookie");
         try {
-            const response = await axios.post("/signIn", form);
+            const response = await api.post("/signIn", form);
             setShowToast(true);
             setErrors({});
             navigate("/");
@@ -52,6 +52,8 @@ export default function Login() {
                 console.log(error.response.data.errors);
                 error.response.data.errors.message = error.response.data.message;
                 setErrors(error.response.data.errors);
+            } else {
+                setErrors(error.response.data);
             }
         }
     };
@@ -158,14 +160,14 @@ export default function Login() {
                     show={showToast}
                     delay={10000}
                     autohide
-                    bg={errors.email || errors.password ? "danger" : "success"}
+                    bg={errors.email || errors.password || errors.message ? "danger" : "success"}
                 >
                     <Toast.Header>
-                        <strong className="me-auto">{errors.email || errors.password ? "Login Failed" : "Info"}</strong>
+                        <strong className="me-auto">{errors.email || errors.password || errors.message ? "Login Failed" : "Info"}</strong>
                     </Toast.Header>
 
                     <Toast.Body className="text-white">
-                        {errors.email || errors.password ? errors.message : "Login successful."}
+                        {errors.email || errors.password || errors.message ? errors.message : "Login successful."}
                     </Toast.Body>
                 </Toast>
             </ToastContainer>

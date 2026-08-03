@@ -58,8 +58,15 @@ export default function NavbarMenu() {
                             style={{ width: "18rem" }}
                         >
                             <Offcanvas.Header>
+                                <img
+                                    src={logo_website}
+                                    width="30"
+                                    height="30"
+                                    className="d-inline-block align-top"
+                                    alt="Logo Website"
+                                /> &nbsp;
                                 <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
-                                    Offcanvas
+                                    Blogger
                                 </Offcanvas.Title>
                             </Offcanvas.Header>
                             <Offcanvas.Body>

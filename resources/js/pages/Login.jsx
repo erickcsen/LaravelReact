@@ -8,7 +8,7 @@ import Form from "react-bootstrap/Form";
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect } from "react";
 
-import axios from "axios";
+import axios from "../axios";
 import Toast from "react-bootstrap/Toast";
 import ToastContainer from "react-bootstrap/ToastContainer";
 

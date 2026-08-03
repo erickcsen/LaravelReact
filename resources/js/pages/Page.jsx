@@ -14,7 +14,11 @@ export default function Page() {
     return (
         <>
             <Routes>
-                <Route path="/" element={<Dashboard />} />
+                <Route path="/" element={
+                    <ProtectedRoute>
+                        <Dashboard />
+                    </ProtectedRoute>
+                } />
                 <Route path="/login" element={
                     <GuestRoute>
                         <Login />

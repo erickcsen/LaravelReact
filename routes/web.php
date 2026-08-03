@@ -5,6 +5,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 // Route::get('/', function () {
 //     $title="Welcome Page";
 //     return view('app', ["title"=>$title, "pagename"=>"Welcome"]);
@@ -26,17 +29,11 @@ Route::middleware('auth')->group(function () {
     })->middleware(['auth', 'signed'])->name('verification.verify');
 });
 
-Route::get('/auth/check', function (Request $request) {
-    if (Auth::check()) {
-        return response()->json([
-            'authenticated' => true,
-            'user' => Auth::user()
-        ]);
-    }
-
+Route::get('/auth/check', function () {
     return response()->json([
-        'authenticated' => false
-    ], 401);
+        'authenticated' => Auth::check(),
+        'user' => Auth::user(),
+    ]);
 });
 
 

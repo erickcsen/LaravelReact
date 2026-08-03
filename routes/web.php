@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('/', [DashboardController::class, "show"]);
 
-Route::post('/signIn', [UserController::class,'signIn']);
 Route::middleware('guest')->group(function () {
     Route::get('/login', [UserController::class, "login"]);
+    Route::post('/signIn', [UserController::class,'signIn']);
     Route::get('/register', [UserController::class, "register"]);
     Route::post('/register', [UserController::class, "store"]);
 });

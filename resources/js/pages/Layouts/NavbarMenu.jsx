@@ -135,6 +135,14 @@ export default function NavbarMenu() {
                                     </NavDropdown>
                                     <div className='d-block d-md-none'>&nbsp;</div>
                                 </Nav>
+                                {/* Left Menu - Only visible on mobile */}
+                                <Form onSubmit={handleLogout} className={(window.AppData.user)?"d-inline d-md-none position-absolute bottom-0 start-0 mb-3 end-0 me-3":"d-none"}>
+                                    <input type="hidden" name="_token" value={csrfToken} />
+                                    <button type="submit" className="btn btn-light border rounded-0 ms-2 w-100">
+                                        <i className='fa fa-sign-out'></i> Log Out
+                                    </button>
+                                </Form>
+                                {/* Right Menu */}
                                 <Form className="d-none d-md-flex">
                                     <Form.Control
                                         type="search"

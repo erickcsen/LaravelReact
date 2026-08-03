@@ -1,6 +1,13 @@
 import axios from "axios";
 
-axios.defaults.withCredentials = true;
-axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
+const axiosInstance = axios.create({
+    baseURL: import.meta.env.VITE_API_URL,
+    withCredentials: true,
+    withXSRFToken: true,
+    headers: {
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "application/json",
+    },
+});
 
-export default axios;
+export default axiosInstance;

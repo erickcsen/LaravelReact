@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../../axios";
 
 export default function ProtectedRoute({ children }) {
     const [loading, setLoading] = useState(true);
@@ -10,7 +10,7 @@ export default function ProtectedRoute({ children }) {
         axios.get("/auth/check", {
             withCredentials: true,
         })
-        .then(() => setAuthenticated(true))
+        .then((response) => setAuthenticated(response.data.authenticated))
         .catch(() => setAuthenticated(false))
         .finally(() => setLoading(false));
     }, []);

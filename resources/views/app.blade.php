@@ -16,7 +16,8 @@
 
     <script>
         window.AppData = {
-            title: "{{ $title }}"
+            title: "{{ $title }}",
+            user: {!! json_encode(Auth::user()) !!},
         };
     </script>
 

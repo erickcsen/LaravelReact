@@ -8,11 +8,22 @@ import Button from 'react-bootstrap/Button';
 
 import { Routes, Route } from "react-router-dom";
 import { Link } from 'react-router-dom';
+import api  from "../../api";
 
 export default function NavbarMenu() {
     let website_name = "Blogger";
     let logo_website = "https://img.utdstc.com/icon/8bf/b0d/8bfb0d6e62b2cc74d1b68e75422c47ee1b0fe83a8b864b53b00bac6383dee49c:600";
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
+    const handleLogout = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await api.post("/logout");
+            window.location.href = "/login";
+        } catch (error) {
+            console.error("An error occurred during logout:", error);
+        }
+    }
     return (
         <>
             {['md'].map((expand) => (
@@ -82,9 +93,15 @@ export default function NavbarMenu() {
                                     <Button variant="btn btn-light border rounded-0">
                                         <i className='fa fa-search'></i>
                                     </Button>
-                                    <Link to="/login" className="btn btn-light border ms-2">
+                                    <Link to="/login" className={(window.AppData.user)?"btn btn-light border rounded-0 ms-2 d-none":"btn btn-light border rounded-0 ms-2"}>
                                         <i className='fa fa-user'></i>
                                     </Link>
+                                </Form>
+                                <Form onSubmit={handleLogout} className={(window.AppData.user)?"d-inline":"d-none"}>
+                                    <input type="hidden" name="_token" value={csrfToken} />
+                                    <button type="submit" className="btn btn-light border rounded-0 ms-2">
+                                        <i className='fa fa-sign-out'></i>
+                                    </button>
                                 </Form>
                             </Offcanvas.Body>
                         </Navbar.Offcanvas>

@@ -71,9 +71,11 @@ class UserController extends Controller
         return redirect('/login')->with('success', 'Register berhasil.');
     }
 
-    public function logout(Request $request)
-    {
-        Auth::logout();
+    /**
+     * Log Out
+     */
+    public function logOut(Request $request){
+        Auth::guard('web')->logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

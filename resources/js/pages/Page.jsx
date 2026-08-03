@@ -29,7 +29,7 @@ export default function Page() {
                         <Register />
                     </GuestRoute>
                 } />
-                <Route path="*" element={<NotFound />} />
+                {/* <Route path="*" element={<NotFound />} /> */}
             </Routes>
         </>
     );

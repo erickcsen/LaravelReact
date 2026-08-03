@@ -6,6 +6,9 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+
 import { Routes, Route } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import api  from "../../api";
@@ -118,6 +121,7 @@ export default function NavbarMenu() {
                             <Offcanvas.Body>
                                 <Nav className="justify-content-start flex-grow-1">
                                     <Nav.Link as={Link} to="/" className='ps-3 rounded-3 hover-menu'>Home</Nav.Link>
+                                    <Nav.Link as={Link} to="/profile" className={(window.AppData.user)?"d-inline d-md-none ps-3 rounded-3 hover-menu":"d-none"}>User Profile</Nav.Link>
                                     <Nav.Link as={Link} to="/articles" className='ps-3 rounded-3 hover-menu'>
                                         Articles
                                     </Nav.Link>
@@ -157,12 +161,21 @@ export default function NavbarMenu() {
                                         <i className='fa fa-user'></i>
                                     </Link>
                                 </Form>
-                                <Form onSubmit={handleLogout} className={(window.AppData.user)?"d-md-inline d-none":"d-none"}>
-                                    <input type="hidden" name="_token" value={csrfToken} />
-                                    <button type="submit" className="btn btn-light border rounded-0 ms-2">
-                                        <i className='fa fa-sign-out'></i>
-                                    </button>
-                                </Form>
+                                <DropdownButton
+                                    align="end"
+                                    id="dropdown-menu-align-end"
+                                    variant='btn btn-light border rounded-0 ms-2'
+                                    className={(window.AppData.user)?"d-md-inline d-none":"d-none"}
+                                    >
+                                        <Dropdown.Item as={Link} to="/profile" eventKey="1">
+                                            User Profile
+                                        </Dropdown.Item>
+                                        <Form onSubmit={handleLogout}>
+                                            <Dropdown.Item as={Button} type="submit" eventKey="2">
+                                                Log Out
+                                            </Dropdown.Item>
+                                        </Form>
+                                </DropdownButton>
                             </Offcanvas.Body>
                         </Navbar.Offcanvas>
                     </Container>

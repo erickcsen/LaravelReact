@@ -5,8 +5,12 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect } from "react";
+
+import axios from "axios";
+import Toast from "react-bootstrap/Toast";
+import ToastContainer from "react-bootstrap/ToastContainer";
 
 export default function Login() {
     useEffect(() => {
@@ -21,6 +25,35 @@ export default function Login() {
 
     const handleShowPassword = () => {
         setShowPassword(!showPassword);
+    };
+
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+
+    const [errors, setErrors] = useState({});
+    const [showToast, setShowToast] = useState(false);
+    const [form, setForm] = useState({
+        email: "",
+        password: "",
+    });
+    const navigate = useNavigate();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await axios.post("/signIn", form);
+            setShowToast(true);
+            setErrors({});
+            navigate("/");
+        } catch (error) {
+            console.log(error);
+            console.log(error.response.data);
+            setShowToast(true);
+            if (error.response?.status === 422) {
+                console.log(error.response.data.errors);
+                error.response.data.errors.message = error.response.data.message;
+                setErrors(error.response.data.errors);
+            }
+        }
     };
 
     return (
@@ -45,54 +78,65 @@ export default function Login() {
                                 Login
                             </h3>
 
-                            {/* Email */}
-                            <Form.Group className="mb-3">
-                                <div className="input-group">
-                                    <span className="input-group-text">
-                                        <i className="fa fa-envelope"></i>
-                                    </span>
+                            <Form method="POST" onSubmit={handleSubmit}>
+                                {/* Email */}
+                                <input type="hidden" name="_token" value={csrfToken} />
+                                <Form.Group className="mb-3">
+                                    <div className="input-group">
+                                        <span className="input-group-text">
+                                            <i className="fa fa-envelope"></i>
+                                        </span>
 
-                                    <Form.Control
-                                        type="email"
-                                        placeholder="Input Email"
-                                    />
-                                </div>
-                            </Form.Group>
+                                        <Form.Control
+                                            type="email"
+                                            placeholder="Input Email"
+                                            isInvalid={!!errors.email}
+                                            value={form.email}
+                                            onChange={(e) => setForm({...form, email: e.target.value})}
+                                        />
+                                    </div>
+                                    {errors.email && <div className="text-danger">{errors.email[0]}</div>}
+                                </Form.Group>
 
-                            {/* Password */}
-                            <Form.Group className="mb-3">
-                                <div className="input-group">
-                                    <span className="input-group-text">
-                                        <i className="fa fa-key"></i>
-                                    </span>
+                                {/* Password */}
+                                <Form.Group className="mb-3">
+                                    <div className="input-group">
+                                        <span className="input-group-text">
+                                            <i className="fa fa-key"></i>
+                                        </span>
 
-                                    <Form.Control
-                                        type={showPassword ? "text" : "password"}
-                                        placeholder="Input Password"
-                                    />
+                                        <Form.Control
+                                            type={showPassword ? "text" : "password"}
+                                            placeholder="Input Password"
+                                            isInvalid={!!errors.password}
+                                            value={form.password}
+                                            onChange={(e) => setForm({...form, password: e.target.value})}
+                                        />
 
-                                    <Button
-                                        className="border"
-                                        variant="light"
-                                        onClick={handleShowPassword}
-                                    >
-                                        <i
-                                            className={
-                                                showPassword
-                                                    ? "fa fa-eye-slash"
-                                                    : "fa fa-eye"
-                                            }
-                                        ></i>
-                                    </Button>
-                                </div>
-                                <Link to="/forgot-password" className="float-end mb-3">
-                                    Lupa Password
-                                </Link>
-                            </Form.Group>
+                                        <Button
+                                            className="border"
+                                            variant="light"
+                                            onClick={handleShowPassword}
+                                        >
+                                            <i
+                                                className={
+                                                    showPassword
+                                                        ? "fa fa-eye-slash"
+                                                        : "fa fa-eye"
+                                                }
+                                            ></i>
+                                        </Button>
+                                    </div>
+                                    {errors.password && <div className="text-danger float-start">{errors.password[0]}</div>}
+                                    <Link to="/forgot-password" className="float-end mb-3">
+                                        Lupa Password
+                                    </Link>
+                                </Form.Group>
 
-                            <Button variant="primary" className="w-100 mb-3">
-                                Login
-                            </Button>
+                                <Button variant="primary" type="submit" className="w-100 mb-3">
+                                    Login
+                                </Button>
+                            </Form>
 
                             <hr/>
                             <p align="center" style={{marginTop:"-30px"}}>
@@ -107,6 +151,24 @@ export default function Login() {
                     </Col>
                 </Row>
             </Container>
+
+            <ToastContainer position="top-end" className="p-3">
+                <Toast
+                    onClose={() => setShowToast(false)}
+                    show={showToast}
+                    delay={10000}
+                    autohide
+                    bg={errors.email || errors.password ? "danger" : "success"}
+                >
+                    <Toast.Header>
+                        <strong className="me-auto">{errors.email || errors.password ? "Login Failed" : "Info"}</strong>
+                    </Toast.Header>
+
+                    <Toast.Body className="text-white">
+                        {errors.email || errors.password ? errors.message : "Login successful."}
+                    </Toast.Body>
+                </Toast>
+            </ToastContainer>
         </>
     );
 }

@@ -5,8 +5,13 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import CardGroup from 'react-bootstrap/CardGroup';
 import Col from 'react-bootstrap/Col';
+import { useEffect } from "react";
 
 export default function Dashboard() {
+    useEffect(() => {
+        document.title = "Dashboard";
+    }, []);
+
     return (
         <>
             <Navbar />

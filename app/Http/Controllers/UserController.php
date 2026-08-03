@@ -14,7 +14,7 @@ class UserController extends Controller
      */
     public function login(): View
     {
-        return view("app", ["title"=>"Login","pagename"=>"Login"]);
+        return view("app", ["title"=>"Login"]);
     }
 
     /**
@@ -22,7 +22,7 @@ class UserController extends Controller
      */
     public function register(): View
     {
-        return view('app', ["title"=>"Register", "pagename"=>"Register"]);
+        return view('app', ["title"=>"Register"]);
     }
 
     /**

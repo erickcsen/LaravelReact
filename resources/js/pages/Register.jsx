@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import Navbar from "./Layouts/NavbarMenu";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -12,6 +12,10 @@ import ToastContainer from "react-bootstrap/ToastContainer";
 import { Link } from 'react-router-dom';
 
 export default function Register() {
+    useEffect(() => {
+        document.title = "Register";
+    }, []);
+
     const [form, setForm] = useState({
         name: "",
         email: "",

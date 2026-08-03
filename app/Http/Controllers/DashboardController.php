@@ -12,6 +12,6 @@ class DashboardController extends Controller
      */
     public function show():View
     {
-        return view("app", ["title"=>"Home Page","pagename"=>"Dashboard"]);
+        return view("app", ["title"=>"Home Page"]);
     }
 }

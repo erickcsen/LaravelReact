@@ -2,8 +2,13 @@ import Navbar from "./Layouts/NavbarMenu";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { useEffect } from "react";
 
 export default function NotFound() {
+    useEffect(() => {
+        document.title = "Page Not Found";
+    }, []);
+
     return (
         <>
             <Navbar />

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use App\Http\Controllers\ForgotPasswordController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +21,8 @@ Route::middleware('guest')->group(function () {
     Route::post('/signIn', [UserController::class,'signIn']);
     Route::get('/register', [UserController::class, "register"]);
     Route::post('/register', [UserController::class, "store"]);
+    Route::get('/forgot-password', [UserController::class, "forgotPassword"]);
+    Route::post('/forgot-password', [ForgotPasswordController::class, 'sendNotification']);
 });
 
 Route::middleware('auth')->group(function () {

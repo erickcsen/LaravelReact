@@ -74,6 +74,16 @@ class UserController extends Controller
     }
 
     /**
+     * Show Forgot Password
+     */
+    public function forgotPassword(): View
+    {
+        return view('app', ["title"=>"Forgot Password"]);
+    }
+
+    
+
+    /**
      * Log Out
      */
     public function logOut(Request $request){

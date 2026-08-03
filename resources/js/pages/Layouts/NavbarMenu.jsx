@@ -70,12 +70,15 @@ export default function NavbarMenu() {
                                 </Offcanvas.Title>
                             </Offcanvas.Header>
                             <Offcanvas.Body>
-                                <Nav className="justify-content-start flex-grow-1 ps-3">
-                                    <Nav.Link as={Link} to="/">Home</Nav.Link>
-                                    <Nav.Link as={Link} to="#action2">Link</Nav.Link>
+                                <Nav className="justify-content-start flex-grow-1">
+                                    <Nav.Link as={Link} to="/" className='ps-3 rounded-3 hover-menu'>Home</Nav.Link>
+                                    <Nav.Link as={Link} to="#action2" className='ps-3 rounded-3 hover-menu'>
+                                        Link
+                                    </Nav.Link>
                                     <NavDropdown
                                         title="Dropdown"
                                         id={`offcanvasNavbarDropdown-expand-${expand}`}
+                                        className='ps-3 rounded-3 hover-menu'
                                     >
                                         <NavDropdown.Item as={Link} to="#action3">
                                             Action
@@ -90,7 +93,7 @@ export default function NavbarMenu() {
                                     </NavDropdown>
                                     <div className='d-block d-md-none'>&nbsp;</div>
                                 </Nav>
-                                <Form className="d-flex">
+                                <Form className="d-none d-md-flex">
                                     <Form.Control
                                         type="search"
                                         placeholder="Search"
@@ -104,7 +107,7 @@ export default function NavbarMenu() {
                                         <i className='fa fa-user'></i>
                                     </Link>
                                 </Form>
-                                <Form onSubmit={handleLogout} className={(window.AppData.user)?"d-inline":"d-none"}>
+                                <Form onSubmit={handleLogout} className={(window.AppData.user)?"d-md-inline d-none":"d-none"}>
                                     <input type="hidden" name="_token" value={csrfToken} />
                                     <button type="submit" className="btn btn-light border rounded-0 ms-2">
                                         <i className='fa fa-sign-out'></i>

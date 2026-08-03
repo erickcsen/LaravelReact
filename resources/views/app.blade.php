@@ -39,6 +39,10 @@
         .carouselSlider .carousel-control-next:hover, .carouselSlider .carousel-control-prev:hover{
             background: rgba(0, 0, 0, 0.3);
         }
+
+        .hover-menu:hover {
+            background-color: #f8f8f8;
+        }
     </style>
 </head>
 <body id="app">

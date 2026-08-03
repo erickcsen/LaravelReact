@@ -69,7 +69,8 @@ export default function NavbarMenu() {
                                     Blogger
                                 </Offcanvas.Title>
                             </Offcanvas.Header>
-                            <Offcanvas.Body>
+                            {/* Menu Example */}
+                            {/* <Offcanvas.Body>
                                 <Nav className="justify-content-start flex-grow-1">
                                     <Nav.Link as={Link} to="/" className='ps-3 rounded-3 hover-menu'>Home</Nav.Link>
                                     <Nav.Link as={Link} to="#action2" className='ps-3 rounded-3 hover-menu'>
@@ -89,6 +90,47 @@ export default function NavbarMenu() {
                                         <NavDropdown.Divider />
                                         <NavDropdown.Item as={Link} to="#action5">
                                             Something else here
+                                        </NavDropdown.Item>
+                                    </NavDropdown>
+                                    <div className='d-block d-md-none'>&nbsp;</div>
+                                </Nav>
+                                <Form className="d-none d-md-flex">
+                                    <Form.Control
+                                        type="search"
+                                        placeholder="Search"
+                                        className="rounded-0"
+                                        aria-label="Search"
+                                    />
+                                    <Button variant="btn btn-light border rounded-0">
+                                        <i className='fa fa-search'></i>
+                                    </Button>
+                                    <Link to="/login" className={(window.AppData.user)?"btn btn-light border rounded-0 ms-2 d-none":"btn btn-light border rounded-0 ms-2"}>
+                                        <i className='fa fa-user'></i>
+                                    </Link>
+                                </Form>
+                                <Form onSubmit={handleLogout} className={(window.AppData.user)?"d-md-inline d-none":"d-none"}>
+                                    <input type="hidden" name="_token" value={csrfToken} />
+                                    <button type="submit" className="btn btn-light border rounded-0 ms-2">
+                                        <i className='fa fa-sign-out'></i>
+                                    </button>
+                                </Form>
+                            </Offcanvas.Body> */}
+                            <Offcanvas.Body>
+                                <Nav className="justify-content-start flex-grow-1">
+                                    <Nav.Link as={Link} to="/" className='ps-3 rounded-3 hover-menu'>Home</Nav.Link>
+                                    <Nav.Link as={Link} to="/articles" className='ps-3 rounded-3 hover-menu'>
+                                        Articles
+                                    </Nav.Link>
+                                    <NavDropdown
+                                        title="Master Data"
+                                        id={`offcanvasNavbarDropdown-expand-${expand}`}
+                                        className='ps-3 rounded-3 hover-menu'
+                                    >
+                                        <NavDropdown.Item as={Link} to="/master-articles">
+                                            Master Articles
+                                        </NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} to="/master-categories">
+                                            Master Categories
                                         </NavDropdown.Item>
                                     </NavDropdown>
                                     <div className='d-block d-md-none'>&nbsp;</div>

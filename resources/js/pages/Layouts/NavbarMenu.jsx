@@ -13,6 +13,7 @@ import api  from "../../api";
 export default function NavbarMenu() {
     let website_name = "Blogger";
     let logo_website = "https://img.utdstc.com/icon/8bf/b0d/8bfb0d6e62b2cc74d1b68e75422c47ee1b0fe83a8b864b53b00bac6383dee49c:600";
+    let logo_website_mobile = "https://www.forbes.com/advisor/wp-content/uploads/2022/02/Blogger-Logo.png";
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
     const handleLogout = async (e) => {
@@ -42,9 +43,8 @@ export default function NavbarMenu() {
                             {website_name}</Navbar.Brand>
                         <Navbar.Brand as={Link} to="/" className='mx-auto d-block d-md-none position-absolute w-100 start-0' style={{ textAlign: "center", zIndex: "-1" }}>
                             <img
-                                src={logo_website}
-                                width="30"
-                                height="30"
+                                src={logo_website_mobile}
+                                height="60"
                                 className="d-inline-block align-top"
                                 alt="Logo Website"
                             /> &nbsp;

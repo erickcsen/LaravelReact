@@ -2,6 +2,9 @@ import { Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../../api";
 
+import Navbar from '../Layouts/NavbarMenu';
+import { OrbitProgress, Commet, Atom } from "react-loading-indicators";
+
 export default function ProtectedRoute({ children }) {
     const [loading, setLoading] = useState(true);
     const [authenticated, setAuthenticated] = useState(false);
@@ -19,7 +22,13 @@ export default function ProtectedRoute({ children }) {
         .finally(() => setLoading(false));
     }, []);
 
-    if (loading) return <div>Loading...</div>;
+    if (loading)
+        return <>
+            <Navbar/>
+            <h1 className="text-center" style={{marginTop:"20vh"}}>
+                <Atom color="#ffac00" size="large" text="Loading" textColor="" /> <br />
+            </h1>
+        </>
 
     window.AppData = {
         user: user,

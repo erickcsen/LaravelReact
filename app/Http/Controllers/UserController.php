@@ -30,7 +30,9 @@ class UserController extends Controller
         if (!Auth::attempt($credentials)) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Invalid credentials'
+                'message' => 'Invalid credentials',
+                'email' => [""],
+                'password' => [""]
             ], 401);
         }
 

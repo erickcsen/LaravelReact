@@ -26,6 +26,20 @@ Route::middleware('auth')->group(function () {
     })->middleware(['auth', 'signed'])->name('verification.verify');
 });
 
+Route::get('/auth/check', function (Request $request) {
+    if (Auth::check()) {
+        return response()->json([
+            'authenticated' => true,
+            'user' => Auth::user()
+        ]);
+    }
+
+    return response()->json([
+        'authenticated' => false
+    ], 401);
+});
+
+
 Route::fallback(function () {
     return response()->view('app', ["title"=>"Page - Not Found", "pagename"=>"404"]);
 });

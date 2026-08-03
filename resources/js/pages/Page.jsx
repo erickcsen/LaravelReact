@@ -7,13 +7,24 @@ import Register from "./Register";
 import NotFound from "./NotFound";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import ProtectedRoute from "./Middleware/ProtectedRoute";
+import GuestRoute from "./Middleware/GuestRoute";
+
 export default function Page() {
     return (
         <>
             <Routes>
                 <Route path="/" element={<Dashboard />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
+                <Route path="/login" element={
+                    <GuestRoute>
+                        <Login />
+                    </GuestRoute>
+                } />
+                <Route path="/register" element={
+                    <GuestRoute>
+                        <Register />
+                    </GuestRoute>
+                } />
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </>

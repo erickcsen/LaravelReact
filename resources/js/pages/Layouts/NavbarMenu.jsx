@@ -45,6 +45,11 @@ export default function NavbarMenu() {
             console.error("An error occurred during logout:", error);
         }
     }
+
+    const [searchBar, useSearch] = useState(false);
+    const mobileNavbar = "d-inline-block ";
+    const searchPopUp = "bg-dark bg-opacity-50 position-fixed top-0 bottom-0 start-0 end-0 border-0 "
+
     return (
         <>
             {['md'].map((expand) => (
@@ -61,16 +66,33 @@ export default function NavbarMenu() {
                                 alt="Logo Website"
                             /> &nbsp;
                             {website_name}</Navbar.Brand>
-                        <Navbar.Brand as={Link} to="/" className='mx-auto d-block d-md-none position-absolute w-100 start-0' style={{ textAlign: "center", zIndex: "-1" }}>
+                        <Navbar.Brand className="mx-auto position-absolute w-100 start-0 d-block d-md-none" style={{ textAlign: "center", zIndex: "-1" }}>
                             <img
                                 src={logo_website_mobile}
                                 height="60"
-                                className="d-inline-block align-top"
+                                className={(searchBar)?"align-top d-none":"align-top d-inline"}
                                 alt="Logo Website"
                             /> &nbsp;
-                            {/* {website_name} */}
                         </Navbar.Brand>
-
+                        <div className='container d-inline d-md-none' style={{marginTop:"-36px",paddingLeft:"48px"}}>
+                            <Form className={(searchBar)?"d-flex d-md-none":"d-none"}>
+                                <Form.Control
+                                    type="search"
+                                    placeholder="Search"
+                                    className="rounded-0"
+                                    aria-label="Search"
+                                />
+                                <Button variant="btn btn-light border rounded-0">
+                                    <i className='fa fa-search'></i>
+                                </Button>
+                                <Link to="/login" className={(window.AppData.user)?"btn btn-light border rounded-0 ms-2 d-none":"btn btn-light border rounded-0 ms-2"}>
+                                    <i className='fa fa-user'></i>
+                                </Link>
+                            </Form>
+                        </div>
+                        <button type='button' onClick={(e)=>useSearch(!searchBar)} className={(searchBar)?"btn btn-light border position-absolute end-0 me-3 d-none":"btn btn-light border position-absolute end-0 me-3 d-inline d-md-none"}>
+                            <i className='fa fa-search'></i>
+                        </button>
                         <Navbar.Offcanvas
                             id={`offcanvasNavbar-expand-${expand}`}
                             aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
@@ -204,6 +226,8 @@ export default function NavbarMenu() {
                     </Container>
                 </Navbar>
             ))}
+            <button type='button' onClick={(e)=>useSearch(!searchBar)} className={(searchBar)?"bg-dark bg-opacity-50 position-fixed top-0 bottom-0 start-0 end-0 border-0":"bg-dark bg-opacity-50 position-fixed top-0 bottom-0 start-0 end-0 border-0 d-none"} style={{zIndex:"1000"}}>
+            </button>
         </>
     );
 }

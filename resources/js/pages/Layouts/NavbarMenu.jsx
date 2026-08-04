@@ -9,6 +9,7 @@ import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 
+import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import api  from "../../api";
@@ -18,6 +19,21 @@ export default function NavbarMenu() {
     let logo_website = "https://img.utdstc.com/icon/8bf/b0d/8bfb0d6e62b2cc74d1b68e75422c47ee1b0fe83a8b864b53b00bac6383dee49c:600";
     let logo_website_mobile = "https://www.forbes.com/advisor/wp-content/uploads/2022/02/Blogger-Logo.png";
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+
+    const [user, setUser] = useState(null);
+    useEffect(() => {
+        api.get("/auth/check", {
+            withCredentials: true,
+        })
+        .then((response) => {
+            setUser(response.data.user);
+        })
+        .catch(() => {})
+    }, []);
+
+    window.AppData = {
+        user: user,
+    };
 
     const handleLogout = async (e) => {
         e.preventDefault();

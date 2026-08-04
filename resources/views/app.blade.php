@@ -18,6 +18,8 @@
         window.AppData = {
             title: "{{ $title }}",
             user: {!! json_encode(Auth::user()) !!},
+            email: "{{ $email ?? '' }}",
+            token: "{{ $token ?? '' }}",
         };
     </script>
 

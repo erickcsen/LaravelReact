@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Password;
+use Illuminate\View\View;
 
 class ForgotPasswordController extends Controller
 {
@@ -18,7 +20,15 @@ class ForgotPasswordController extends Controller
             $request->only('email')
         );
         return $status === Password::RESET_LINK_SENT
-            ? back()->with('success', 'Link reset password berhasil dikirim.')
-            : back()->withErrors(['email' => __($status)]);
+            ? request()->json(['message' => 'Link reset password berhasil dikirim.'])
+            : request()->json(['message' => __($status)]);
+    }
+
+    /**
+     * Reset Password Page
+     */
+    public function resetPasswordPage(Request $request, $token):View{
+        $email = $request->input('email');
+        return view('app',["title"=>"Reset Password", "email"=>$email, "token"=>$token]);
     }
 }

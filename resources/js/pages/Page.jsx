@@ -10,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import ProtectedRoute from "./Middleware/ProtectedRoute";
 import GuestRoute from "./Middleware/GuestRoute";
+import ResetPassword from "./ResetPassword";
 
 export default function Page() {
     return (
@@ -31,6 +32,11 @@ export default function Page() {
                 <Route path="/forgot-password" element={
                     <GuestRoute>
                         <ForgotPassword />
+                    </GuestRoute>
+                } />
+                <Route path="/reset-password/:token" element={
+                    <GuestRoute>
+                        <ResetPassword />
                     </GuestRoute>
                 } />
                 <Route path="*" element={<NotFound />} />

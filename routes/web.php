@@ -23,6 +23,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/register', [UserController::class, "store"]);
     Route::get('/forgot-password', [UserController::class, "forgotPassword"]);
     Route::post('/forgot-password', [ForgotPasswordController::class, 'sendNotification']);
+    Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'resetPasswordPage'])->name('password.reset');
 });
 
 Route::middleware('auth')->group(function () {

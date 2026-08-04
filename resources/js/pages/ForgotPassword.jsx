@@ -5,6 +5,8 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import api from "../api";
+import Toast from "react-bootstrap/Toast";
+import ToastContainer from "react-bootstrap/ToastContainer";
 
 export default function ForgotPassword() {
     useEffect(() => {
@@ -58,6 +60,14 @@ export default function ForgotPassword() {
                     <Col md={6} lg={5} xl={4}>
                         <div className="card shadow-sm">
                             <div className="card-body">
+                                <div className="text-center mb-3">
+                                    <img
+                                        src={logoWebsite}
+                                        width="60"
+                                        height="60"
+                                        alt="Logo Website"
+                                    />
+                                </div>
                                 <h3 className="card-title text-center mb-4">Forgot Password</h3>
                                 <form onSubmit={handleSubmit}>
                                     <div className="input-group">
@@ -82,6 +92,23 @@ export default function ForgotPassword() {
                     </Col>
                 </Row>
             </Container>
+            <ToastContainer position="top-end" className="p-3">
+                <Toast
+                    onClose={() => setShowToast(false)}
+                    show={showToast}
+                    delay={10000}
+                    autohide
+                    bg={errors.email || errors.message ? "danger" : "success"}
+                >
+                    <Toast.Header>
+                        <strong className="me-auto">{errors.email || errors.message ? "Login Failed" : "Info"}</strong>
+                    </Toast.Header>
+
+                    <Toast.Body className="text-white">
+                        {errors.email || errors.message ? errors.message : "Login successful."}
+                    </Toast.Body>
+                </Toast>
+            </ToastContainer>
         </>
     );
 }

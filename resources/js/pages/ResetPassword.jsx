@@ -5,6 +5,8 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import api from "../api";
+import Toast from "react-bootstrap/Toast";
+import ToastContainer from "react-bootstrap/ToastContainer";
 
 export default function ResetPassword() {
     const { token } = useParams();
@@ -38,7 +40,7 @@ export default function ResetPassword() {
         password_confirmation: "",
         token: token || "",
     });
-
+    const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
         await api.get("/sanctum/csrf-cookie");
@@ -46,10 +48,10 @@ export default function ResetPassword() {
             const response = await api.post("/reset-password", form);
             setShowToast(true);
             setErrors({});
-            // navigate("/login");
+            navigate("/login");
         } catch (error) {
             console.log(error);
-            console.log(error.response.data);
+            console.log(error.response);
             setShowToast(true);
             if (error.response?.status === 422) {
                 console.log(error.response.data.errors);
@@ -134,6 +136,24 @@ export default function ResetPassword() {
                     </Col>
                 </Row>
             </Container>
+
+            <ToastContainer position="top-end" className="p-3">
+                <Toast
+                    onClose={() => setShowToast(false)}
+                    show={showToast}
+                    delay={10000}
+                    autohide
+                    bg={errors.email || errors.password  || errors.message ? "danger" : "success"}
+                >
+                    <Toast.Header>
+                        <strong className="me-auto">{errors.email || errors.password || errors.message ? "Reset Password Failed" : "Info"}</strong>
+                    </Toast.Header>
+
+                    <Toast.Body className="text-white">
+                        {errors.email || errors.password || errors.message ? errors.message : "Reset Password Successfully."}
+                    </Toast.Body>
+                </Toast>
+            </ToastContainer>
         </>
     )
 }

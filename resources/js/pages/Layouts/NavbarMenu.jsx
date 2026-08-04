@@ -20,7 +20,8 @@ export default function NavbarMenu() {
     let logo_website_mobile = "https://www.forbes.com/advisor/wp-content/uploads/2022/02/Blogger-Logo.png";
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
-    const [user, setUser] = useState(null);
+    const AppData = window.AppData;
+    const [user, setUser] = useState(AppData.user);
     useEffect(() => {
         api.get("/auth/check", {
             withCredentials: true,

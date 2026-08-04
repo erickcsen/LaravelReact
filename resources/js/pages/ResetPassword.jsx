@@ -16,6 +16,12 @@ export default function ResetPassword() {
     const handleShowPassword = () => {
         setShowPassword(!showPassword);
     };
+
+    const [showPassword2, setShowPassword2] = useState(false);
+    const handleShowPassword2 = () => {
+        setShowPassword2(!showPassword2);
+    };
+
     const logoWebsite =
         "https://img.utdstc.com/icon/8bf/b0d/8bfb0d6e62b2cc74d1b68e75422c47ee1b0fe83a8b864b53b00bac6383dee49c:600";
 
@@ -95,13 +101,14 @@ export default function ResetPassword() {
                                         <i className="fa fa-key"></i>
                                     </span>
                                     <input
-                                        type="password"
+                                        type={(showPassword)?"text":"password"}
                                         className={`form-control ${errors.password ? 'is-invalid' : ''}`}
                                         id="password"
                                         placeholder="Enter your new password"
                                         value={form.password}
                                         onChange={(e) => setForm({ ...form, password: e.target.value })}
                                     />
+                                    <button type="button" onClick={handleShowPassword} className="btn btn-light border"><i className={(showPassword)?'fa fa-eye-slash':'fa fa-eye'}></i></button>
                                 </div>
                                 {errors.password && <div className="text-danger">{errors.password[0]}</div>}
                                 &nbsp;
@@ -110,13 +117,14 @@ export default function ResetPassword() {
                                         <i className="fa fa-key"></i>
                                     </span>
                                     <input
-                                        type="password"
+                                        type={(showPassword2)?"text":"password"}
                                         className={`form-control ${errors.password_confirmation ? 'is-invalid' : ''}`}
                                         id="password_confirmation"
                                         placeholder="Confirm your new password"
                                         value={form.password_confirmation}
                                         onChange={(e) => setForm({ ...form, password_confirmation: e.target.value })}
                                     />
+                                    <button type="button" onClick={handleShowPassword2} className="btn btn-light border"><i className={(showPassword2)?"fa fa-eye-slash":"fa fa-eye"}></i></button>
                                 </div>
                                 {errors.password_confirmation && <div className="text-danger">{errors.password_confirmation[0]}</div>}
                                 &nbsp;

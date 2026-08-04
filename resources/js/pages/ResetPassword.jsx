@@ -3,8 +3,15 @@ import { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import api from "../api";
 
 export default function ResetPassword() {
+    const { token } = useParams();
+    const [searchParams] = useSearchParams();
+    const email = searchParams.get("email");
+
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
     const [showPassword, setShowPassword] = useState(false);
     const handleShowPassword = () => {
         setShowPassword(!showPassword);
@@ -20,17 +27,20 @@ export default function ResetPassword() {
     const [showToast, setShowToast] = useState(false);
 
     const [form, setForm] = useState({
-        email: "", password: "", password_confirmation: "", token: "",
+        email: email || "",
+        password: "",
+        password_confirmation: "",
+        token: token || "",
     });
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         await api.get("/sanctum/csrf-cookie");
         try {
-            const response = await api.post("/forgot-password", form);
+            const response = await api.post("/reset-password", form);
             setShowToast(true);
             setErrors({});
-            navigate("/login");
+            // navigate("/login");
         } catch (error) {
             console.log(error);
             console.log(error.response.data);
@@ -62,6 +72,8 @@ export default function ResetPassword() {
                             </div>
                             <h3 className="text-center mb-4">Reset Password</h3>
                             <form onSubmit={handleSubmit}>
+                                <input type="hidden" name="_token" value={csrfToken} />
+                                <input type="hidden" name="token" value={form.token} />
                                 <div className="input-group">
                                     <span className="input-group-text">
                                         <i className="fa fa-envelope"></i>

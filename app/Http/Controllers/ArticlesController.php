@@ -13,6 +13,7 @@ class ArticlesController extends Controller
      */
     public function index()
     {
+        dd(Auth::user());
         return view("app",["title"=>"Blogs"]);
     }
 

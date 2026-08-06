@@ -41,9 +41,9 @@ export default function Page() {
                     </GuestRoute>
                 } />
                 <Route path="/master-articles" element={
-                    <GuestRoute>
+                    <ProtectedRoute>
                         <MasterBlog />
-                    </GuestRoute>
+                    </ProtectedRoute>
                 } />
                 <Route path="*" element={<NotFound />} />
             </Routes>

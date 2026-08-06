@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\ArticlesController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +18,7 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', [DashboardController::class, "show"]);
 
 Route::middleware('guest')->group(function () {
-    Route::get('/login', [UserController::class, "login"]);
+    Route::get('/login', [UserController::class, "login"])->name("login");
     Route::post('/signIn', [UserController::class,'signIn']);
     Route::get('/register', [UserController::class, "register"]);
     Route::post('/register', [UserController::class, "store"]);
@@ -28,6 +29,7 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+    Route::resource('/master-articles', ArticlesController::class);
     Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
         $request->fulfill();
         return redirect('/')->with('success','Sukses verifikasi email');

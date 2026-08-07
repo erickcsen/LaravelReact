@@ -13,7 +13,6 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        dd(Auth::user());
         return view("app",["title"=>"Blogs"]);
     }
 
@@ -22,7 +21,7 @@ class ArticlesController extends Controller
      */
     public function create()
     {
-        //
+        return view("app",["title"=>"Blogs"]);
     }
 
     /**

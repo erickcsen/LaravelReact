@@ -43,6 +43,10 @@
         .hover-menu:hover {
             background-color: #f8f8f8;
         }
+
+        .ck-editor__editable {
+            min-height: 400px;
+        }
     </style>
 </head>
 <body id="app">

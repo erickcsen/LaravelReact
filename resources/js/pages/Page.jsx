@@ -11,7 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ProtectedRoute from "./Middleware/ProtectedRoute";
 import GuestRoute from "./Middleware/GuestRoute";
 import ResetPassword from "./ResetPassword";
-import MasterBlog from "./MasterBlog";
+import MasterArticle from "./MasterArticle";
 
 export default function Page() {
     return (
@@ -42,7 +42,12 @@ export default function Page() {
                 } />
                 <Route path="/master-articles" element={
                     <ProtectedRoute>
-                        <MasterBlog />
+                        <MasterArticle />
+                    </ProtectedRoute>
+                } />
+                <Route path="/master-articles/:page" element={
+                    <ProtectedRoute>
+                        <MasterArticle />
                     </ProtectedRoute>
                 } />
                 <Route path="*" element={<NotFound />} />

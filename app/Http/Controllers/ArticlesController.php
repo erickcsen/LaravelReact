@@ -29,7 +29,12 @@ class ArticlesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "title"=>"required",
+            "content"=>"required",
+            "user"=>"required",
+            "category"=>"required",
+        ]);
     }
 
     /**

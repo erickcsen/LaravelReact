@@ -34,6 +34,7 @@ class ArticlesController extends Controller
             "content"=>"required",
             "user"=>"required",
             "category"=>"required",
+            "statusCategory"=>"nullable"
         ]);
     }
 

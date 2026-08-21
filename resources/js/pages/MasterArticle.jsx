@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NavBar from "./Layouts/NavbarMenu"
 import { Container, Row, Col } from "react-bootstrap"
 import { Link, useParams, useNavigate } from "react-router-dom"
@@ -16,6 +16,21 @@ export default function MasterArticle() {
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
     const [showToast, setShowToast] = useState(false);
     const navigate = useNavigate();
+
+    const [category_list, setCategory] = useState((window.AppData.category)?window.AppData.category:[]);
+    useEffect(() => {
+        api.get("/category/list", {
+            withCredentials: true,
+        })
+        .then((response) => {
+            setCategory(response.data);
+        })
+        .catch(() => setAuthenticated(false));
+    }, []);
+
+    window.AppData.category = category_list;
+    console.log(window.AppData);
+
     const [form, setForm] = useState({
         title:"",
         content:"",
@@ -95,11 +110,14 @@ export default function MasterArticle() {
                                 <Col xs="12" md="4" lg="3">
                                     <label>Category</label>
                                     <div className="input-group">
-                                        <Form.Select onChange={(e) => {setForm({...form, category: e.target.value, statusCategory: (e.target.value=="New")?e.target.value:""});setErrors({...errors, category:""})}} isInvalid={!!errors.category} className={(form.statusCategory=="New")?"d-none":""}>
-                                            <option value="">-- Select Category --</option>
-                                            <option value="New">-- New Category --</option>
+                                        <Form.Select onChange={(e) => {setForm({...form, category: e.target.value, statusCategory: (e.target.value=="New")?e.target.value:""});setErrors({...errors, category:""})}} isInvalid={!!errors.category} className={(form.statusCategory=="New")?"d-none":"rounded"} style={{textTransform:"capitalize"}}>
+                                            <option key={0} value="">-- Select Category --</option>
+                                            <option key={1} value="New">-- New Category --</option>
+                                            {category_list.map((item, index)=>(
+                                                <option key={index+1} value={item.id} style={{textTransform:"capitalize"}}>{item.title}</option>
+                                            ))}
                                         </Form.Select>
-                                        <input onChange={(e) => {setForm({...form, category: e.target.value});setErrors({...errors, category:""})}} className={(form.statusCategory=="New")?"form-control":"form-control d-none"} placeholder="Input new Category"/>
+                                        <input onChange={(e) => {setForm({...form, category: e.target.value});setErrors({...errors, category:""})}} className={(form.statusCategory=="New")?"form-control rounded":"form-control d-none"} placeholder="Input new Category"/>
                                     </div>
                                     {errors.category && <div className="text-danger">{errors.category[0]}</div>}
                                 </Col>

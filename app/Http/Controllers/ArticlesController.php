@@ -22,8 +22,7 @@ class ArticlesController extends Controller
      */
     public function create()
     {
-        $category = Category::get();
-        return view("app",["title"=>"Blogs","category"=>$category]);
+        return view("app",["title"=>"Blogs"]);
     }
 
     /**
@@ -42,13 +41,16 @@ class ArticlesController extends Controller
         $data = [];
         if ($request->statusCategory == "New" && Category::where(["title"=>$request->category])->get()->count()==0){
             $data = Category::create(["title"=>$request->category, "user_id"=>$request->user,  "description"=>""]);
+            $category = $data->id;
+        } else {
+            $category = Category::where(["id"=>$request->category])->orWhere(["title"=>$request->category])->get()[0]->id;
         }
 
         Articles::create([
             'title'=>$request->title,
-            'content'=>$request->content,
-            'user'=>$request->user,
-            'category'=>$category,
+            'description'=>$request->content,
+            'user_id'=>$request->user,
+            'category_id'=>$category,
         ]);
 
         return redirect('/')->with('success', 'Insert Articles Successfull.');

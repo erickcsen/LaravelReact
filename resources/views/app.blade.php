@@ -15,18 +15,7 @@
 
 
     <script>
-        window.AppData = {
-            title: "{{ $title }}",
-            user: {!! json_encode(Auth::user()) !!},
-            @if (isset($category))
-                category :{
-                    @foreach ($category as $data)
-                        id:"{{ $data->id }}",
-                        title:"{{ $data->title }}",
-                    @endforeach
-                },
-            @endif
-        };
+        window.AppData = {};
     </script>
 
     @vite('resources/js/app.jsx')

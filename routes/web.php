@@ -7,6 +7,8 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\ArticlesController;
 
+use App\Models\Category;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,6 +36,10 @@ Route::middleware('auth')->group(function () {
         $request->fulfill();
         return redirect('/')->with('success','Sukses verifikasi email');
     })->middleware(['auth', 'signed'])->name('verification.verify');
+});
+
+Route::get('/category/list', function () {
+    return response()->json(Category::select()->get(), 200);
 });
 
 Route::get('/auth/check', function () {

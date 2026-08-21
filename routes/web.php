@@ -45,7 +45,7 @@ Route::get('/category/list', function () {
 Route::get('/auth/check', function () {
     return response()->json([
         'authenticated' => Auth::check(),
-        'user' => Auth::user(),
+        'user' => ["id"=>Auth::user()->id, "name"=>Auth::user()->name],
     ]);
 });
 

@@ -80,7 +80,7 @@ export default function ForgotPassword() {
                                             id="email"
                                             placeholder="Enter your email"
                                             value={form.email}
-                                            onChange={(e) => setForm({ ...form, email: e.target.value })}
+                                            onChange={(e) => {setForm({ ...form, email: e.target.value });errors.email=''}}
                                         />
                                     </div>
                                     {errors.email && <div className="text-danger">{errors.email[0]}</div>}

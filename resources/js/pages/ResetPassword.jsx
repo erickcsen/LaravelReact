@@ -108,7 +108,7 @@ export default function ResetPassword() {
                                         id="password"
                                         placeholder="Enter your new password"
                                         value={form.password}
-                                        onChange={(e) => setForm({ ...form, password: e.target.value })}
+                                        onChange={(e) => {setForm({ ...form, password: e.target.value }); errors.password=''}}
                                     />
                                     <button type="button" onClick={handleShowPassword} className="btn btn-light border"><i className={(showPassword)?'fa fa-eye-slash':'fa fa-eye'}></i></button>
                                 </div>

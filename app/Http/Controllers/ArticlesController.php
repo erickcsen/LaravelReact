@@ -38,17 +38,17 @@ class ArticlesController extends Controller
             "statusCategory"=>"nullable"
         ]);
 
+        $data = [];
         if ($request->statusCategory == "New" && Category::where(["title"=>$request->category])->get()->count()==0){
-            Category::create(["title"=>$request->category, "user_id"=>$request->user,  "description"=>""]);
+            $data = Category::create(["title"=>$request->category, "user_id"=>$request->user,  "description"=>""]);
         }
 
-        // Articles::create([
-        //     'title'=>$request->title,
-        //     'content'=>$request->content,
-        //     'user'=>$request->user,
-        //     'category'=>$request->category,
-        //     'statusCategory'=>$request->statusCategory,
-        // ]);
+        Articles::create([
+            'title'=>$request->title,
+            'content'=>$request->content,
+            'user'=>$request->user,
+            'category'=>$category,
+        ]);
 
         return redirect('/')->with('success', 'Insert Articles Successfull.');
     }

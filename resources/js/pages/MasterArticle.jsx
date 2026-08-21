@@ -20,7 +20,8 @@ export default function MasterArticle() {
         title:"",
         content:"",
         user:(window.AppData.user)?window.AppData.user.id:"",
-        category:""
+        category:"",
+        statusCategory:""
     });
     const [errors, setErrors] = useState({
         title:"", category:"", content:"", statusCategory:""
@@ -44,14 +45,19 @@ export default function MasterArticle() {
             setErrors({});
             // navigate("/");
         } catch (error) {
-            setShowToast(true);
+            if (error.response.status !== 500) {
+                setShowToast(true);
 
-            const error_message = error.response.data.errors;
-            const errors = {title:error_message.title, category:error_message.category, content:error_message.content, message:error.response.data.message};
+                const error_message = error.response.data.errors;
+                const errors = {title:error_message.title, category:error_message.category, content:error_message.content, message:error.response.data.message};
 
-            console.log({error_message:error_message});
-            console.log({errors:errors});
-            setErrors(errors);
+                console.log({error_message:error_message});
+                console.log({errors:errors});
+                setErrors(errors);
+            } else {
+                console.log(error.response)
+                setErrors({message:error.response.data.message});
+            }
         }
         /** */
     }
@@ -89,7 +95,7 @@ export default function MasterArticle() {
                                 <Col xs="12" md="4" lg="3">
                                     <label>Category</label>
                                     <div className="input-group">
-                                        <Form.Select onChange={(e) => {setForm({...form, category: e.target.value, statusCategory: e.target.value});setErrors({...errors, category:""})}} isInvalid={!!errors.category} className={(form.statusCategory=="New")?"d-none":""}>
+                                        <Form.Select onChange={(e) => {setForm({...form, category: e.target.value, statusCategory: (e.target.value=="New")?e.target.value:""});setErrors({...errors, category:""})}} isInvalid={!!errors.category} className={(form.statusCategory=="New")?"d-none":""}>
                                             <option value="">-- Select Category --</option>
                                             <option value="New">-- New Category --</option>
                                         </Form.Select>
@@ -97,7 +103,7 @@ export default function MasterArticle() {
                                     </div>
                                     {errors.category && <div className="text-danger">{errors.category[0]}</div>}
                                 </Col>
-                                <Col className={!errors.content ? "mt-3" : "mt-1"}>
+                                <Col className={!errors.content ? "mt-3" : "mt-1"} style={{paddingBottom:"66px"}}>
                                     {errors.content && <div className="text-danger">{errors.content[0]}</div>}
                                     <Col className="p-0" style={(errors.content)?{border:"solid 1px red"}:{}}>
                                         <CKEditor

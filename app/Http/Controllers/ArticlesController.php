@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Articles;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -37,7 +38,9 @@ class ArticlesController extends Controller
             "statusCategory"=>"nullable"
         ]);
 
-        return response()->json("success information", 200);
+        if ($request->statusCategory == "New" && Category::where(["title"=>$request->category])->get()->count()==0){
+            Category::create(["title"=>$request->category, "user_id"=>$request->user,  "description"=>""]);
+        }
 
         // Articles::create([
         //     'title'=>$request->title,

@@ -37,6 +37,8 @@ class ArticlesController extends Controller
             "statusCategory"=>"nullable"
         ]);
 
+        return response()->json("success information", 200);
+
         // Articles::create([
         //     'title'=>$request->title,
         //     'content'=>$request->content,

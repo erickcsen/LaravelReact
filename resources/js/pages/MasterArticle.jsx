@@ -19,7 +19,7 @@ export default function MasterArticle() {
     const [form, setForm] = useState({
         title:"",
         content:"",
-        user:(window.AppData.user)?window.AppData.user.id:'',
+        user:(window.AppData.user)?window.AppData.user.id:"",
         category:""
     });
     const [errors, setErrors] = useState({
@@ -44,12 +44,14 @@ export default function MasterArticle() {
             setErrors({});
             // navigate("/");
         } catch (error) {
-            console.log(error);
-            console.log(error.response.data);
             setShowToast(true);
 
             const error_message = error.response.data.errors;
-            setErrors({title:error_message.title[0], category:error_message.category, content:error_message.content, message:error.response.data.message});
+            const errors = {title:error_message.title, category:error_message.category, content:error_message.content, message:error.response.data.message};
+
+            console.log({error_message:error_message});
+            console.log({errors:errors});
+            setErrors(errors);
         }
         /** */
     }
@@ -80,32 +82,34 @@ export default function MasterArticle() {
                                 <Col xs="12" md="8" lg="9">
                                     <label>Title</label>
                                     <div className="input-group">
-                                        <input className="form-control" onChange={(e) => setForm({...form, title: e.target.value})}/>
+                                        <Form.Control type="text" placeholder="Input title" isInvalid={!!errors.title} value={form.title} onChange={(e) => {setForm({...form, title: e.target.value}); setErrors({...errors, title:""})}}/>
                                     </div>
                                     {errors.title && <div className="text-danger">{errors.title[0]}</div>}
-                                    &nbsp;
                                 </Col>
                                 <Col xs="12" md="4" lg="3">
                                     <label>Category</label>
                                     <div className="input-group">
-                                        <Form.Select onChange={(e) => setForm({...form, category: e.target.value, statusCategory: e.target.value})} className={(form.statusCategory=="New")?"d-none":""}>
+                                        <Form.Select onChange={(e) => {setForm({...form, category: e.target.value, statusCategory: e.target.value});setErrors({...errors, category:""})}} isInvalid={!!errors.category} className={(form.statusCategory=="New")?"d-none":""}>
                                             <option value="">-- Select Category --</option>
                                             <option value="New">-- New Category --</option>
                                         </Form.Select>
-                                        <input onChange={(e) => setForm({...form, category: e.target.value})} className={(form.statusCategory=="New")?"form-control":"form-control d-none"} placeholder="Input new Category"/>
-                                        {errors.category && <div className="text-danger">{errors.category[0]}</div>}
-                                        &nbsp;
+                                        <input onChange={(e) => {setForm({...form, category: e.target.value});setErrors({...errors, category:""})}} className={(form.statusCategory=="New")?"form-control":"form-control d-none"} placeholder="Input new Category"/>
                                     </div>
+                                    {errors.category && <div className="text-danger">{errors.category[0]}</div>}
                                 </Col>
-                                <Col className="mt-3">
-                                    <CKEditor
-                                        editor={ClassicEditor}
-                                        data={content}
-                                        onChange={(event, editor) => {
-                                            const data = editor.getData();
-                                            setForm({...form, content: data})
-                                        }}
-                                    />
+                                <Col className={!errors.content ? "mt-3" : "mt-1"}>
+                                    {errors.content && <div className="text-danger">{errors.content[0]}</div>}
+                                    <Col className="p-0" style={(errors.content)?{border:"solid 1px red"}:{}}>
+                                        <CKEditor
+                                            editor={ClassicEditor}
+                                            data={content}
+                                            onChange={(event, editor) => {
+                                                const data = editor.getData();
+                                                setForm({...form, content: data})
+                                                setErrors({...errors, content:""})
+                                            }}
+                                        />
+                                    </Col>
                                 </Col>
                             </Row>
                         </Col>

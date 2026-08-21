@@ -68,9 +68,9 @@ export default function Register() {
                     <Col md={6} lg={5} xl={4}>
                         <div className="border rounded p-4 shadow-sm">
                             <div className="position-absolute">
-                                <a href="/login" className="btn btn-light border" onClick={handleShowPassword}>
+                                <Link to="/login" className="btn btn-light border" onClick={handleShowPassword}>
                                     <i className="fa fa-angle-left"></i>
-                                </a>
+                                </Link>
                             </div>
                             <div className="text-center mb-3">
                                 <img
@@ -95,7 +95,7 @@ export default function Register() {
                                             type="text"
                                             placeholder="Input Name"
                                             value={form.name}
-                                            onChange={(e) => setForm({...form, name: e.target.value})}
+                                            onChange={(e) => {setForm({...form, name: e.target.value}); errors.name = ''}}
                                             isInvalid={!!errors.name}
                                         />
                                     </div>
@@ -111,7 +111,7 @@ export default function Register() {
                                             type="email"
                                             placeholder="Input Email"
                                             value={form.email}
-                                            onChange={(e) => setForm({...form, email: e.target.value})}
+                                            onChange={(e) => {setForm({...form, email: e.target.value});errors.email=""}}
                                             isInvalid={!!errors.email}
                                         />
                                     </div>
@@ -127,7 +127,7 @@ export default function Register() {
                                             type={showPassword ? "text" : "password"}
                                             placeholder="Input Password"
                                             value={form.password}
-                                            onChange={(e) => setForm({...form, password: e.target.value})}
+                                            onChange={(e) => {setForm({...form, password: e.target.value}); errors.password=""}}
                                             isInvalid={!!errors.password}
                                         />
                                         <Button variant="light" className="border" onClick={handleShowPassword}>
@@ -146,7 +146,7 @@ export default function Register() {
                                             type={showPassword2 ? "text" : "password"}
                                             placeholder="Input Password Confirmation"
                                             value={form.password_confirmation}
-                                            onChange={(e) => setForm({...form, password_confirmation: e.target.value})}
+                                            onChange={(e) => {setForm({...form, password_confirmation: e.target.value}); errors.password_confirmation=''}}
                                             isInvalid={!!errors.password_confirmation}
                                         />
                                         <Button variant="light" className="border" onClick={handleShowPassword2}>

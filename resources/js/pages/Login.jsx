@@ -94,7 +94,7 @@ export default function Login() {
                                             placeholder="Input Email"
                                             isInvalid={!!errors.email}
                                             value={form.email}
-                                            onChange={(e) => setForm({...form, email: e.target.value})}
+                                            onChange={(e) => {setForm({...form, email: e.target.value});errors.email=''}}
                                         />
                                     </div>
                                     {errors.email && <div className="text-danger">{errors.email[0]}</div>}
@@ -112,7 +112,7 @@ export default function Login() {
                                             placeholder="Input Password"
                                             isInvalid={!!errors.password}
                                             value={form.password}
-                                            onChange={(e) => setForm({...form, password: e.target.value})}
+                                            onChange={(e) => {setForm({...form, password: e.target.value});errors.password=''}}
                                         />
 
                                         <Button

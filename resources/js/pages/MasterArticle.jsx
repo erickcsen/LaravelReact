@@ -1,8 +1,12 @@
 import { useState } from "react";
 import NavBar from "./Layouts/NavbarMenu"
 import { Container, Row, Col } from "react-bootstrap"
-import { Link, useParams } from "react-router-dom"
+import { Link, useParams, useNavigate } from "react-router-dom"
 import Form from 'react-bootstrap/Form'
+
+import api from "../api";
+import Toast from "react-bootstrap/Toast";
+import ToastContainer from "react-bootstrap/ToastContainer";
 
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
@@ -10,36 +14,42 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 export default function MasterArticle() {
     const { page } = useParams();
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+    const [showToast, setShowToast] = useState(false);
+    const navigate = useNavigate();
     const [form, setForm] = useState({
         title:"",
         content:"",
         user:(window.AppData.user)?window.AppData.user.id:'',
         category:""
     });
-    const [errors, useErrors] = useState({
+    const [errors, setErrors] = useState({
         title:"", category:"", content:"", statusCategory:""
     })
 
     const url = {
-        store:"/master-articles/store",
+        store:"/master-articles",
         update:"/master-articles/update"
     };
     const [content, setContent] = useState("");
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(form);
-        /*
+
         await api.get("/sanctum/csrf-cookie");
         try {
-            const response = (page=="create")? await api.post(url.store, form): await api.post(url.update, form);
+            const str_url = (page=="create")? url.store : url.update;
+            const response = (page=="create")? await api.post(str_url, form): await api.put(str_url, form);
+            console.log({str_url, form, response});
             setShowToast(true);
             setErrors({});
-            navigate("/");
+            // navigate("/");
         } catch (error) {
             console.log(error);
             console.log(error.response.data);
             setShowToast(true);
-            setErrors(error.response.data);
+
+            const error_message = error.response.data.errors;
+            setErrors({title:error_message.title[0], category:error_message.category, content:error_message.content, message:error.response.data.message});
         }
         /** */
     }
@@ -102,6 +112,23 @@ export default function MasterArticle() {
                     </Row>
                 </form>
             </Container>
+            <ToastContainer position="top-end" className="p-3">
+                <Toast
+                    onClose={() => setShowToast(false)}
+                    show={showToast}
+                    delay={10000}
+                    autohide
+                    bg={errors.message ? "danger" : "success"}
+                >
+                    <Toast.Header>
+                        <strong className="me-auto">{errors.message ? "Insert Articles Failed" : "Info"}</strong>
+                    </Toast.Header>
+
+                    <Toast.Body className="text-white">
+                        {errors.message ? errors.message : "Insert Articles Successful."}
+                    </Toast.Body>
+                </Toast>
+            </ToastContainer>
         </>);
     else
         return (

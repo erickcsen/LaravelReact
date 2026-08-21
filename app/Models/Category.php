@@ -4,21 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Articles extends Model
+class Category extends Model
 {
-    protected $table = 'Articles';
+    protected $table = 'categories';
     protected $fillable = [
         'user_id',
         'title',
-        'description',
-        'category_id',
+        'description'
     ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-    public function category()
+
+    public function articles()
     {
-        return $this->belongsTo(Category::class);
+        return $this->hasMany(Articles::class);
     }
 }

@@ -36,12 +36,22 @@ class ArticlesController extends Controller
             "category"=>"required",
             "statusCategory"=>"nullable"
         ]);
+
+        // Articles::create([
+        //     'title'=>$request->title,
+        //     'content'=>$request->content,
+        //     'user'=>$request->user,
+        //     'category'=>$request->category,
+        //     'statusCategory'=>$request->statusCategory,
+        // ]);
+
+        return redirect('/')->with('success', 'Insert Articles Successfull.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Blogs $blogs)
+    public function show(Articles $Articles)
     {
         //
     }
@@ -49,7 +59,7 @@ class ArticlesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Blogs $blogs)
+    public function edit(Articles $Articles)
     {
         //
     }
@@ -57,7 +67,7 @@ class ArticlesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Blogs $blogs)
+    public function update(Request $request, Articles $Articles)
     {
         //
     }
@@ -65,7 +75,7 @@ class ArticlesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Blogs $blogs)
+    public function destroy(Articles $Articles)
     {
         //
     }

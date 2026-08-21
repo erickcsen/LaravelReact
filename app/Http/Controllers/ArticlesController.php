@@ -22,7 +22,8 @@ class ArticlesController extends Controller
      */
     public function create()
     {
-        return view("app",["title"=>"Blogs"]);
+        $category = Category::get();
+        return view("app",["title"=>"Blogs","category"=>$category]);
     }
 
     /**

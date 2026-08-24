@@ -31,6 +31,7 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+    Route::get('/master-articles/article/list', [ArticlesController::class,"listArticleWithAuthentication"]);
     Route::resource('/master-articles', ArticlesController::class);
     Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
         $request->fulfill();

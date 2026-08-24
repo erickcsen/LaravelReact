@@ -7,6 +7,8 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
+use Illuminate\Support\Facades\Auth;
+
 class ArticlesController extends Controller
 {
     /**
@@ -86,5 +88,17 @@ class ArticlesController extends Controller
     public function destroy(Articles $Articles)
     {
         //
+    }
+
+    /**
+     * List Articles with Authentication
+     */
+    public function listArticleWithAuthentication(){
+        $data = [];
+        $userID = Auth::user()->id;
+
+        $data = Articles::where(["user_id"=>$userID])->get();
+
+        return response()->json($data, 200);
     }
 }

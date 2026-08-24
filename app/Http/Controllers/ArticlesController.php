@@ -49,11 +49,14 @@ class ArticlesController extends Controller
             $category = Category::where(["id"=>$request->category])->orWhere(["title"=>$request->category])->get()[0]->id;
         }
 
+        $path = $request->file('image')->store('images', 'public');
+
         Articles::create([
             'title'=>$request->title,
             'description'=>$request->content,
             'user_id'=>$request->user,
             'category_id'=>$category,
+            'image_url'=>'storage/' . $path,
         ]);
 
         return redirect('/')->with('success', 'Insert Articles Successfull.');

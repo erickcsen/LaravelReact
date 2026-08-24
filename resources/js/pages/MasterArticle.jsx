@@ -52,11 +52,19 @@ export default function MasterArticle() {
         e.preventDefault();
         console.log(form);
 
+        const formData = new FormData();
+        formData.append("title", form.title);
+        formData.append("content", form.content);
+        formData.append("user", form.user);
+        formData.append("image", form.image);
+        formData.append("category", form.category);
+        formData.append("statusCategory", form.statusCategory);
+
         await api.get("/sanctum/csrf-cookie");
         try {
             const str_url = (page=="create")? url.store : url.update;
-            const response = (page=="create")? await api.post(str_url, form): await api.put(str_url, form);
-            console.log({str_url, form, response});
+            const response = (page=="create")? await api.post(str_url, formData): await api.put(str_url, formData);
+            navigate("/master-articles");
             setShowToast(true);
             setErrors({});
             // navigate("/");
@@ -125,7 +133,7 @@ export default function MasterArticle() {
                                 <Col xs="12" className={!errors.content ? "mt-1" : "mt-1"}>
                                     <label>Banner</label>
                                     <div className="input-group">
-                                        <Form.Control type="file" accept="image/*" onChange={(e)=>{setForm({...form, image: e.target.value})}} isInvalid={!!errors.image} />
+                                        <Form.Control type="file" accept="image/*" onChange={(e)=>{setForm({...form, image: (e.target.files.length > 0)?e.target.files[0]:e.target.value}); setErrors({...errors, image:""})}} isInvalid={!!errors.image} />
                                     </div>
                                     {errors.image && <div className="text-danger">{errors.image[0]}</div>}
                                 </Col>

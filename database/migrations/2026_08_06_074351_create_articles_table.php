@@ -15,6 +15,7 @@ return new class extends Migration
             $table->bigIncrements("id");
             $table->string("title");
             $table->text("description");
+            $table->text("image_url");
             $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });

@@ -29,17 +29,18 @@ export default function MasterArticle() {
     }, []);
 
     window.AppData.category = category_list;
-    console.log(window.AppData);
+
 
     const [form, setForm] = useState({
         title:"",
         content:"",
         user:(window.AppData.user)?window.AppData.user.id:"",
+        image:[],
         category:"",
         statusCategory:""
     });
     const [errors, setErrors] = useState({
-        title:"", category:"", content:"", statusCategory:""
+        title:"", category:"", content:"", statusCategory:"", image:""
     })
 
     const url = {
@@ -64,10 +65,10 @@ export default function MasterArticle() {
                 setShowToast(true);
 
                 const error_message = error.response.data.errors;
-                const errors = {title:error_message.title, category:error_message.category, content:error_message.content, message:error.response.data.message};
+                const errors = {title:error_message.title, category:error_message.category, content:error_message.content, message:error.response.data.message, image:error_message.image};
 
-                console.log({error_message:error_message});
-                console.log({errors:errors});
+                console.error({error_message:error_message});
+                console.error({errors:errors});
                 setErrors(errors);
             } else {
                 console.log(error.response)
@@ -120,6 +121,13 @@ export default function MasterArticle() {
                                         <input onChange={(e) => {setForm({...form, category: e.target.value});setErrors({...errors, category:""})}} className={(form.statusCategory=="New")?"form-control rounded":"form-control d-none"} placeholder="Input new Category"/>
                                     </div>
                                     {errors.category && <div className="text-danger">{errors.category[0]}</div>}
+                                </Col>
+                                <Col xs="12" className={!errors.content ? "mt-1" : "mt-1"}>
+                                    <label>Banner</label>
+                                    <div className="input-group">
+                                        <Form.Control type="file" accept="image/*" onChange={(e)=>{setForm({...form, image: e.target.value})}} isInvalid={!!errors.image} />
+                                    </div>
+                                    {errors.image && <div className="text-danger">{errors.image[0]}</div>}
                                 </Col>
                                 <Col className={!errors.content ? "mt-3" : "mt-1"} style={{paddingBottom:"66px"}}>
                                     {errors.content && <div className="text-danger">{errors.content[0]}</div>}

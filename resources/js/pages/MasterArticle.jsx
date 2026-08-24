@@ -65,7 +65,14 @@ export default function MasterArticle() {
             const str_url = (page=="create")? url.store : url.update;
             const response = (page=="create")? await api.post(str_url, formData): await api.put(str_url, formData);
             navigate("/master-articles");
-            setShowToast(true);
+
+            form.title = "";
+            form.content = "";
+            form.image = null;
+            form.category = "";
+            form.statusCategory = "";
+
+            // setShowToast(true);
             setErrors({});
             // navigate("/");
         } catch (error) {

@@ -421,35 +421,43 @@ export default function MasterArticle() {
                             return <Col key={data.id}>
                                 <sup><Link to="/master-articles" style={{textDecoration:"none"}}>Master Articles</Link> &gt; {data.title} </sup> <br />
                                 <Row>
-                                    <Col xs={12} md={5} lg={4} xl={3}>
-                                        <div
-                                            style={{
-                                                height: "100%",
-                                                display: "flex",
-                                                alignItems: "center",
-                                                justifyContent: "center"
-                                            }}
-                                        >
-                                            <img
-                                                src={domain + "/" + data.image_url}
-                                                width="100%"
-                                                className="rounded"
-                                                alt=""
-                                            />
+                                    <Col xs={12}>
+                                        <div className="container mt-3 d-none d-md-block" style={{position:"absolute",left:"0",right:"0"}}>
+                                            <div style={{float:"right"}}>
+                                                <Link to={"/master-articles/edit/"+data.id+""}>
+                                                    <Button className="btn btn-light border">
+                                                        <i className="fa fa-edit"></i> Edit
+                                                    </Button>
+                                                </Link> &nbsp;
+                                                <Button className="btn btn-danger">
+                                                    <i className="fa fa-trash"></i> Delete
+                                                </Button>
+                                            </div>
+                                        </div>
+                                        <div className="position-fixed end-0 start-0 bottom-0 border py-2 bg-white d-block d-md-none px-3" style={{zIndex:"1000"}}>
+                                            <div style={{float:"left"}}>
+                                                <Link to="/master-articles" className="btn btn-light border">
+                                                    <i className="fa fa-angle-left"></i> Back
+                                                </Link>
+                                            </div>
+                                            <div style={{float:"right"}}>
+                                                <Link to={"/master-articles/edit/"+data.id+""}>
+                                                    <Button className="btn btn-light border">
+                                                        <i className="fa fa-edit"></i> Edit
+                                                    </Button>
+                                                </Link> &nbsp;
+                                                <Button className="btn btn-danger">
+                                                    <i className="fa fa-trash"></i> Delete
+                                                </Button>
+                                            </div>
+                                        </div>
+                                        <div style={{background:"url('"+domain + "/" + data.image_url+"')",height:"300px",backgroundSize:"auto 100%",backgroundPosition:"center",backgroundRepeat:"no-repeat"}}>
                                         </div>
                                     </Col>
-                                    <Col xs={12} md={7} lg={8} xl={9} >
-                                        <h3>{data.title}</h3>
+                                    <Col xs={12} style={{paddingBottom:"66px"}}>
+                                        <h3 className="mt-2">{data.title}</h3>
                                         <div dangerouslySetInnerHTML={{__html:data.description}}>
                                         </div>
-                                        <Link to={"/master-articles/edit/"+data.id+""}>
-                                            <Button className="btn btn-light border">
-                                                <i className="fa fa-edit"></i> Edit
-                                            </Button>
-                                        </Link> &nbsp;
-                                        <Button className="btn btn-danger">
-                                            <i className="fa fa-trash"></i> Delete
-                                        </Button>
                                     </Col>
                                 </Row>
                             </Col>
@@ -457,27 +465,28 @@ export default function MasterArticle() {
                     </Row>
                 </Container>
             </>
-        else if(id != null && dataArticle.data.length > 0 == false) return <>
-            <NavBar/>
-            <Container>
-                <Row>
-                    <Col>
-                        <sup><Link to="/master-articles" style={{textDecoration:"none"}}>Master Articles</Link> &gt; Article </sup> <br />
-                        <Row>
-                            <p className="text-center" style={{marginTop:"10vh",fontSize:"14pt"}}>
-                                <i className="fa fa-filter" style={{fontSize:"100px"}}></i><br/>
-                                <b>
-                                    Tidak Ada Data
-                                </b> <br />
-                                <Link to="/master-articles">
-                                    <Button className="btn btn-light border mt-3">Back</Button>
-                                </Link>
-                            </p>
-                        </Row>
-                    </Col>
-                </Row>
-            </Container>
-        </>
+        else if(id != null && dataArticle.data.length > 0 == false) // Kalau tidak ada data
+            return <>
+                <NavBar/>
+                <Container>
+                    <Row>
+                        <Col>
+                            <sup><Link to="/master-articles" style={{textDecoration:"none"}}>Master Articles</Link> &gt; Article </sup> <br />
+                            <Row>
+                                <p className="text-center" style={{marginTop:"10vh",fontSize:"14pt"}}>
+                                    <i className="fa fa-filter" style={{fontSize:"100px"}}></i><br/>
+                                    <b>
+                                        Tidak Ada Data
+                                    </b> <br />
+                                    <Link to="/master-articles">
+                                        <Button className="btn btn-light border mt-3">Back</Button>
+                                    </Link>
+                                </p>
+                            </Row>
+                        </Col>
+                    </Row>
+                </Container>
+            </>
     }
     else { // Show Data Articles in Master Articles
         document.title = "Master Article";
@@ -523,7 +532,7 @@ export default function MasterArticle() {
                             <Col className="mt-3">
                                 <Row>
                                     {dataArticleWithPagination.data.map((data) => (
-                                        <Col xs="12" md="6" lg="3" key={data.id}>
+                                        <Col xs="12" md="6" lg="3" key={data.id} className="pt-3">
                                             <Link to={"/master-articles/article/"+""+data.id} style={{textDecoration:"none",color:"inherit"}} onClick={(e)=>{setLoading(true);setID(data.id);getDataArticle();}}>
                                                 <div className="border">
                                                     <div>
@@ -541,7 +550,7 @@ export default function MasterArticle() {
                             </Col>
                         </Row>
                         <Row>
-                            <Col className="mt-3" style={{textAlign:"center"}}>
+                            <Col className="mt-3 mb-3" style={{textAlign:"center"}}>
                                 {dataArticleWithPagination.links.map((data)=>{
                                     return <Button type="button" dangerouslySetInnerHTML={{__html: data.label}} className="btn btn-light border me-1" onClick={(e)=>{setLoading(true); if (data.url != null) setUrlGetArticles(data.url);handlePagination(e)}} key={data.label}>
                                         </Button>

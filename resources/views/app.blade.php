@@ -44,6 +44,19 @@
         .ck-editor__editable {
             min-height: 400px;
         }
+
+        .text-limit {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            overflow: hidden;
+        }
+        .text-limit-title-card {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+            overflow: hidden;
+        }
     </style>
 </head>
 <body id="app">

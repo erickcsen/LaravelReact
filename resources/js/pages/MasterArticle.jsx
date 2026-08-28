@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import NavBar from "./Layouts/NavbarMenu"
-import { Container, Row, Col } from "react-bootstrap"
+import { Container, Row, Col, Button } from "react-bootstrap"
 import { Link, useParams, useNavigate } from "react-router-dom"
 import Form from 'react-bootstrap/Form'
 
@@ -10,6 +10,7 @@ import ToastContainer from "react-bootstrap/ToastContainer";
 
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { OrbitProgress, Commet, Atom, BlinkBlur } from "react-loading-indicators";
 
 export default function MasterArticle() {
     const { page } = useParams();
@@ -92,6 +93,29 @@ export default function MasterArticle() {
         }
         /** */
     }
+
+    const domain = window.location.origin;
+    const [loading, setLoading] = useState(true);
+    const [dataArticle, setDataArticle] = useState([]);
+    const [urlGetArticles, setUrlGetArticles] = useState("/master-articles/article/list");
+
+    useEffect(() => {handlePagination()});
+
+    const handlePagination = async (e)=>{
+        if (loading)
+            api.get(urlGetArticles, {
+                withCredentials: true,
+            })
+            .then((response) => {
+                if (loading) console.log(response);
+                setDataArticle(response.data);
+            }).catch((errors)=>{
+                console.log(errors);
+            }).finally(()=>{
+                setLoading(false);
+            });
+    }
+
     if (page=="create")
         return (<>
             <NavBar/>
@@ -181,7 +205,29 @@ export default function MasterArticle() {
                 </Toast>
             </ToastContainer>
         </>);
-    else
+    else // Show Data Articles in Master Articles
+        if (loading)
+            return <>
+                <NavBar />
+                <Container>
+                    <Row>
+                        <Col>
+                            <b className="h5">
+                                Master Article
+                            </b>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Link to="/master-articles/create" className="btn btn-primary mt-3">New Article</Link>
+                        </Col>
+                        <h1 className="text-center" style={{marginTop:"10vh"}}>
+                            <BlinkBlur color="#ffac00" size="large" text="Loading" textColor="" /> <br />
+                        </h1>
+                    </Row>
+                </Container>
+            </>
+
         return (
             <>
                 <NavBar />
@@ -199,7 +245,32 @@ export default function MasterArticle() {
                         </Col>
                     </Row>
                     <Row>
-                        <Col>
+                        <Col className="mt-3">
+                            <Row>
+                                {dataArticle.data.map((data) => (
+                                    <Col xs="12" md="6" lg="3" key={data.id}>
+                                        <Link to={"/master-articles/articles/"+""+data.id} style={{textDecoration:"none",color:"inherit"}}>
+                                            <div className="border">
+                                                <div>
+                                                    <div style={{backgroundImage:"url("+domain+'/'+data.image_url+")", height:"200px", backgroundSize:"100% 100%"}}></div>
+                                                </div>
+                                                <div className="p-2">
+                                                    <b style={{fontSize:"large"}} className="text-limit-title-card"> {data.title} </b>
+                                                    <div className="mt-2 text-limit" dangerouslySetInnerHTML={{__html: data.description}}></div>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    </Col>
+                                ))}
+                            </Row>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className="mt-3" style={{textAlign:"center"}}>
+                            {dataArticle.links.map((data)=>{
+                                return <Button type="button" dangerouslySetInnerHTML={{__html: data.label}} className="btn btn-light border me-1" onClick={(e)=>{setLoading(true); if (data.url != null) setUrlGetArticles(data.url);handlePagination(e)}} key={data.label}>
+                                    </Button>
+                            })}
                         </Col>
                     </Row>
                 </Container>

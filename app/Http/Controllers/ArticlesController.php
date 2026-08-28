@@ -101,7 +101,7 @@ class ArticlesController extends Controller
         $data = [];
         $userID = Auth::user()->id;
 
-        $data = Articles::where(["user_id"=>$userID])->get();
+        $data = Articles::where(["user_id"=>$userID])->paginate(1);
 
         return response()->json($data, 200);
     }

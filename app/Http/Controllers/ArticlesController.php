@@ -16,7 +16,7 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        return view("app",["title"=>"Blogs"]);
+        return view("app",["title"=>"Master Article"]);
     }
 
     /**
@@ -24,7 +24,7 @@ class ArticlesController extends Controller
      */
     public function create()
     {
-        return view("app",["title"=>"Blogs"]);
+        return view("app",["title"=>"Master Article"]);
     }
 
     /**
@@ -67,8 +67,7 @@ class ArticlesController extends Controller
      */
     public function show($id, Articles $Articles)
     {
-        $data = $Articles->where(["id"=>$id])->get();
-        return view("app",["title"=>(count($data) > 0)?$data[0]->title:"Article"]);
+        return view("app",["title"=>"Master Article"]);
     }
 
     /**

@@ -116,7 +116,8 @@ export default function MasterArticle() {
             });
     }
 
-    if (page=="create")
+    if (page=="create"){
+        document.title = "Master Article - New Article";
         return (<>
             <NavBar/>
             <Container>
@@ -205,11 +206,15 @@ export default function MasterArticle() {
                 </Toast>
             </ToastContainer>
         </>);
-    else if (page=="article")
+    }
+    else if (page=="article"){
+        document.title = "Master Article - Read Article";
         return <>
             <NavBar/>
         </>
-    else // Show Data Articles in Master Articles
+    }
+    else { // Show Data Articles in Master Articles
+        document.title = "Master Article";
         if (loading) // Loading Dapatkan Data Article
             return <>
                 <NavBar />
@@ -304,4 +309,5 @@ export default function MasterArticle() {
                     </Row>
                 </Container>
             </>
+    }
 }

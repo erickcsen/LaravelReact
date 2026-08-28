@@ -205,6 +205,10 @@ export default function MasterArticle() {
                 </Toast>
             </ToastContainer>
         </>);
+    else if (page=="article")
+        return <>
+            <NavBar/>
+        </>
     else // Show Data Articles in Master Articles
         if (loading) // Loading Dapatkan Data Article
             return <>

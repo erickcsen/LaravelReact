@@ -50,6 +50,11 @@ export default function Page() {
                         <MasterArticle />
                     </ProtectedRoute>
                 } />
+                <Route path="/master-articles/:page/:id" element={
+                    <ProtectedRoute>
+                        <MasterArticle />
+                    </ProtectedRoute>
+                } />
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </>

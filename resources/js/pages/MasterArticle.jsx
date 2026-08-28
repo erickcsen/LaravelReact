@@ -249,7 +249,7 @@ export default function MasterArticle() {
                                 <Row>
                                     {dataArticle.data.map((data) => (
                                         <Col xs="12" md="6" lg="3" key={data.id}>
-                                            <Link to={"/master-articles/articles/"+""+data.id} style={{textDecoration:"none",color:"inherit"}}>
+                                            <Link to={"/master-articles/"+""+data.id} style={{textDecoration:"none",color:"inherit"}}>
                                                 <div className="border">
                                                     <div>
                                                         <div style={{backgroundImage:"url("+domain+'/'+data.image_url+")", height:"200px", backgroundSize:"100% 100%"}}></div>

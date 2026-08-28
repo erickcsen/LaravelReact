@@ -67,7 +67,7 @@ class ArticlesController extends Controller
      */
     public function show(Articles $Articles)
     {
-        //
+        echo "Show";
     }
 
     /**
@@ -75,7 +75,7 @@ class ArticlesController extends Controller
      */
     public function edit(Articles $Articles)
     {
-        //
+        echo "Edit";
     }
 
     /**

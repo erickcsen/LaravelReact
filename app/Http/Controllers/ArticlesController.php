@@ -75,7 +75,7 @@ class ArticlesController extends Controller
      */
     public function edit(Articles $Articles)
     {
-        echo "Edit";
+        return view("app",["title"=>"Master Article"]);
     }
 
     /**

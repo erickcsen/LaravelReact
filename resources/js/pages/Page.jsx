@@ -50,7 +50,7 @@ export default function Page() {
                         <MasterArticle />
                     </ProtectedRoute>
                 } />
-                <Route path="/master-articles/:page/:id" element={
+                <Route path="/master-articles/:page/:parameter_id" element={
                     <ProtectedRoute>
                         <MasterArticle />
                     </ProtectedRoute>

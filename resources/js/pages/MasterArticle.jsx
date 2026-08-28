@@ -13,7 +13,8 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { OrbitProgress, Commet, Atom, BlinkBlur } from "react-loading-indicators";
 
 export default function MasterArticle() {
-    const { page, id } = useParams();
+    const { page, parameter_id } = useParams();
+    const [id, setID] = useState(parameter_id);
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
     const [showToast, setShowToast] = useState(false);
     const navigate = useNavigate();
@@ -96,23 +97,41 @@ export default function MasterArticle() {
 
     const domain = window.location.origin;
     const [loading, setLoading] = useState(true);
+    const [loadingDataWithPagination, setLoadingDataWithPagination] = useState(true);
     const [dataArticleWithPagination, setDataArticleWithPagination] = useState([]);
+    const [dataArticle, setDataArticle] = useState({data:[]});
     const [urlGetArticles, setUrlGetArticles] = useState("/master-articles/article/list");
 
     useEffect(() => {handlePagination()});
+    useEffect(() => {getDataArticle()});
 
-    const handlePagination = async (e)=>{
-        if (loading)
+    const getDataArticle = async (e)=>{
+        if (loading && id != null)
             api.get(urlGetArticles, {
-                withCredentials: true,
+                withCredentials: true, params:{id}
             })
             .then((response) => {
-                if (loading) console.log({dataWithPagination:response});
-                setDataArticleWithPagination(response.data);
+                console.log({dataWithID:response});
+                setDataArticle(response.data);
             }).catch((errors)=>{
                 console.log(errors);
             }).finally(()=>{
                 setLoading(false);
+            })
+    }
+
+    const handlePagination = async (e)=>{
+        if (loadingDataWithPagination)
+            api.get(urlGetArticles, {
+                withCredentials: true,
+            })
+            .then((response) => {
+                console.log({dataWithPagination:response});
+                setDataArticleWithPagination(response.data);
+            }).catch((errors)=>{
+                console.log(errors);
+            }).finally(()=>{
+                setLoadingDataWithPagination(false);
             });
     }
 
@@ -209,13 +228,93 @@ export default function MasterArticle() {
     }
     else if (page=="article"){
         document.title = "Master Article - Read Article";
-        return <>
+        if (id==null) navigate("/master-articles");
+
+        if (loading) // Loading Dapatkan Data Article
+            return <>
+                <NavBar />
+                <Container>
+                    <Row>
+                        <Col>
+                            <sup><Link to="/master-articles" style={{textDecoration:"none"}}>Master Articles</Link> &gt; Article </sup> <br />
+                            <h1 className="text-center" style={{marginTop:"10vh"}}>
+                                <BlinkBlur color="#ffac00" size="large" text="Loading" textColor="" /> <br />
+                            </h1>
+                        </Col>
+                    </Row>
+                </Container>
+            </>
+        else if(dataArticle.data.length > 0 == true) // Kalau ada data article
+            return <>
+                <NavBar/>
+                <Container>
+                    <Row>
+                        {dataArticle.data.map((data) => {
+                            return <Col key={data.id}>
+                                <sup><Link to="/master-articles" style={{textDecoration:"none"}}>Master Articles</Link> &gt; {data.title} </sup> <br />
+                                <Row>
+                                    <Col xs={12} md={5} lg={4} xl={3}>
+                                        <div
+                                            className="rounded"
+                                            style={{
+                                                height: "100%",
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center"
+                                            }}
+                                        >
+                                            <img
+                                                src={domain + "/" + data.image_url}
+                                                width="100%"
+                                                className="rounded"
+                                                alt=""
+                                            />
+                                        </div>
+                                    </Col>
+                                    <Col xs={12} md={7} lg={8} xl={9} >
+                                        <h3>{data.title}</h3>
+                                        <div dangerouslySetInnerHTML={{__html:data.description}}>
+                                        </div>
+                                        <Link to={"/master-articles/edit/"+data.id+""}>
+                                            <Button className="btn btn-light border">
+                                                <i className="fa fa-edit"></i> Edit
+                                            </Button>
+                                        </Link> &nbsp;
+                                        <Button className="btn btn-danger">
+                                            <i className="fa fa-trash"></i> Delete
+                                        </Button>
+                                    </Col>
+                                </Row>
+                            </Col>
+                        })}
+                    </Row>
+                </Container>
+            </>
+        else if(id != null && dataArticle.data.length > 0 == false) return <>
             <NavBar/>
+            <Container>
+                <Row>
+                    <Col>
+                        <sup><Link to="/master-articles" style={{textDecoration:"none"}}>Master Articles</Link> &gt; Article </sup> <br />
+                        <Row>
+                            <p className="text-center" style={{marginTop:"10vh",fontSize:"14pt"}}>
+                                <i className="fa fa-filter" style={{fontSize:"100px"}}></i><br/>
+                                <b>
+                                    Tidak Ada Data
+                                </b> <br />
+                                <Link to="/master-articles">
+                                    <Button className="btn btn-light border mt-3">Back</Button>
+                                </Link>
+                            </p>
+                        </Row>
+                    </Col>
+                </Row>
+            </Container>
         </>
     }
     else { // Show Data Articles in Master Articles
         document.title = "Master Article";
-        if (loading) // Loading Dapatkan Data Article
+        if (loadingDataWithPagination) // Loading Dapatkan Data Article
             return <>
                 <NavBar />
                 <Container>
@@ -258,7 +357,7 @@ export default function MasterArticle() {
                                 <Row>
                                     {dataArticleWithPagination.data.map((data) => (
                                         <Col xs="12" md="6" lg="3" key={data.id}>
-                                            <Link to={"/master-articles/article/"+""+data.id} style={{textDecoration:"none",color:"inherit"}}>
+                                            <Link to={"/master-articles/article/"+""+data.id} style={{textDecoration:"none",color:"inherit"}} onClick={(e)=>{setLoading(true);setID(data.id);getDataArticle();}}>
                                                 <div className="border">
                                                     <div>
                                                         <div style={{backgroundImage:"url("+domain+'/'+data.image_url+")", height:"200px", backgroundSize:"100% 100%"}}></div>

@@ -97,12 +97,14 @@ class ArticlesController extends Controller
     /**
      * List Articles with Authentication
      */
-    public function listArticleWithAuthentication(){
+    public function listArticleWithAuthentication(Request $request){
+        $id = $request->id;
+
         $data = [];
         $userID = Auth::user()->id;
 
-        $data = Articles::where(["user_id"=>$userID])->paginate(10);
-
-        return response()->json($data, 200);
+        $data = Articles::where(["user_id"=>$userID]);
+        if ($id!==null) $data->where(["id"=>$id]);
+        return response()->json($data->paginate(10), 200);
     }
 }

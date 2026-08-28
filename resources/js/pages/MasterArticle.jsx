@@ -13,7 +13,7 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { OrbitProgress, Commet, Atom, BlinkBlur } from "react-loading-indicators";
 
 export default function MasterArticle() {
-    const { page } = useParams();
+    const { page, id } = useParams();
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
     const [showToast, setShowToast] = useState(false);
     const navigate = useNavigate();
@@ -96,7 +96,7 @@ export default function MasterArticle() {
 
     const domain = window.location.origin;
     const [loading, setLoading] = useState(true);
-    const [dataArticle, setDataArticle] = useState([]);
+    const [dataArticleWithPagination, setDataArticleWithPagination] = useState([]);
     const [urlGetArticles, setUrlGetArticles] = useState("/master-articles/article/list");
 
     useEffect(() => {handlePagination()});
@@ -107,8 +107,8 @@ export default function MasterArticle() {
                 withCredentials: true,
             })
             .then((response) => {
-                if (loading) console.log(response);
-                setDataArticle(response.data);
+                if (loading) console.log({dataWithPagination:response});
+                setDataArticleWithPagination(response.data);
             }).catch((errors)=>{
                 console.log(errors);
             }).finally(()=>{
@@ -236,7 +236,7 @@ export default function MasterArticle() {
                     </Row>
                 </Container>
             </>
-        else if(dataArticle.data.length > 0 == true) // Kalau ada data article
+        else if(dataArticleWithPagination.data.length > 0 == true) // Kalau ada data article
             return (
                 <>
                     <NavBar />
@@ -256,7 +256,7 @@ export default function MasterArticle() {
                         <Row>
                             <Col className="mt-3">
                                 <Row>
-                                    {dataArticle.data.map((data) => (
+                                    {dataArticleWithPagination.data.map((data) => (
                                         <Col xs="12" md="6" lg="3" key={data.id}>
                                             <Link to={"/master-articles/article/"+""+data.id} style={{textDecoration:"none",color:"inherit"}}>
                                                 <div className="border">
@@ -276,7 +276,7 @@ export default function MasterArticle() {
                         </Row>
                         <Row>
                             <Col className="mt-3" style={{textAlign:"center"}}>
-                                {dataArticle.links.map((data)=>{
+                                {dataArticleWithPagination.links.map((data)=>{
                                     return <Button type="button" dangerouslySetInnerHTML={{__html: data.label}} className="btn btn-light border me-1" onClick={(e)=>{setLoading(true); if (data.url != null) setUrlGetArticles(data.url);handlePagination(e)}} key={data.label}>
                                         </Button>
                                 })}

@@ -206,7 +206,7 @@ export default function MasterArticle() {
             </ToastContainer>
         </>);
     else // Show Data Articles in Master Articles
-        if (loading)
+        if (loading) // Loading Dapatkan Data Article
             return <>
                 <NavBar />
                 <Container>
@@ -227,7 +227,7 @@ export default function MasterArticle() {
                     </Row>
                 </Container>
             </>
-        else if(dataArticle.data.length > 0 == true)
+        else if(dataArticle.data.length > 0 == true) // Kalau ada data article
             return (
                 <>
                     <NavBar />
@@ -249,7 +249,7 @@ export default function MasterArticle() {
                                 <Row>
                                     {dataArticle.data.map((data) => (
                                         <Col xs="12" md="6" lg="3" key={data.id}>
-                                            <Link to={"/master-articles/"+""+data.id} style={{textDecoration:"none",color:"inherit"}}>
+                                            <Link to={"/master-articles/article/"+""+data.id} style={{textDecoration:"none",color:"inherit"}}>
                                                 <div className="border">
                                                     <div>
                                                         <div style={{backgroundImage:"url("+domain+'/'+data.image_url+")", height:"200px", backgroundSize:"100% 100%"}}></div>
@@ -276,7 +276,7 @@ export default function MasterArticle() {
                     </Container>
                 </>
             )
-        else
+        else // Kalau tidak ada data article
             return <>
                 <NavBar />
                 <Container>

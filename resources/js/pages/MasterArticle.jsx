@@ -227,9 +227,57 @@ export default function MasterArticle() {
                     </Row>
                 </Container>
             </>
-
-        return (
-            <>
+        else if(dataArticle.data.length > 0 == true)
+            return (
+                <>
+                    <NavBar />
+                    <Container>
+                        <Row>
+                            <Col>
+                                <b className="h5">
+                                    Master Article
+                                </b>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Link to="/master-articles/create" className="btn btn-primary mt-3">New Article</Link>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col className="mt-3">
+                                <Row>
+                                    {dataArticle.data.map((data) => (
+                                        <Col xs="12" md="6" lg="3" key={data.id}>
+                                            <Link to={"/master-articles/articles/"+""+data.id} style={{textDecoration:"none",color:"inherit"}}>
+                                                <div className="border">
+                                                    <div>
+                                                        <div style={{backgroundImage:"url("+domain+'/'+data.image_url+")", height:"200px", backgroundSize:"100% 100%"}}></div>
+                                                    </div>
+                                                    <div className="p-2">
+                                                        <b style={{fontSize:"large"}} className="text-limit-title-card"> {data.title} </b>
+                                                        <div className="mt-2 text-limit" dangerouslySetInnerHTML={{__html: data.description}}></div>
+                                                    </div>
+                                                </div>
+                                            </Link>
+                                        </Col>
+                                    ))}
+                                </Row>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col className="mt-3" style={{textAlign:"center"}}>
+                                {dataArticle.links.map((data)=>{
+                                    return <Button type="button" dangerouslySetInnerHTML={{__html: data.label}} className="btn btn-light border me-1" onClick={(e)=>{setLoading(true); if (data.url != null) setUrlGetArticles(data.url);handlePagination(e)}} key={data.label}>
+                                        </Button>
+                                })}
+                            </Col>
+                        </Row>
+                    </Container>
+                </>
+            )
+        else
+            return <>
                 <NavBar />
                 <Container>
                     <Row>
@@ -243,37 +291,13 @@ export default function MasterArticle() {
                         <Col>
                             <Link to="/master-articles/create" className="btn btn-primary mt-3">New Article</Link>
                         </Col>
-                    </Row>
-                    <Row>
-                        <Col className="mt-3">
-                            <Row>
-                                {dataArticle.data.map((data) => (
-                                    <Col xs="12" md="6" lg="3" key={data.id}>
-                                        <Link to={"/master-articles/articles/"+""+data.id} style={{textDecoration:"none",color:"inherit"}}>
-                                            <div className="border">
-                                                <div>
-                                                    <div style={{backgroundImage:"url("+domain+'/'+data.image_url+")", height:"200px", backgroundSize:"100% 100%"}}></div>
-                                                </div>
-                                                <div className="p-2">
-                                                    <b style={{fontSize:"large"}} className="text-limit-title-card"> {data.title} </b>
-                                                    <div className="mt-2 text-limit" dangerouslySetInnerHTML={{__html: data.description}}></div>
-                                                </div>
-                                            </div>
-                                        </Link>
-                                    </Col>
-                                ))}
-                            </Row>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="mt-3" style={{textAlign:"center"}}>
-                            {dataArticle.links.map((data)=>{
-                                return <Button type="button" dangerouslySetInnerHTML={{__html: data.label}} className="btn btn-light border me-1" onClick={(e)=>{setLoading(true); if (data.url != null) setUrlGetArticles(data.url);handlePagination(e)}} key={data.label}>
-                                    </Button>
-                            })}
-                        </Col>
+                        <p className="text-center" style={{marginTop:"10vh",fontSize:"14pt"}}>
+                            <i className="fa fa-filter" style={{fontSize:"100px"}}></i><br/>
+                            <b>
+                                Tidak Ada Data
+                            </b>
+                        </p>
                     </Row>
                 </Container>
             </>
-        )
 }

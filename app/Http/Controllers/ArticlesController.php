@@ -65,9 +65,10 @@ class ArticlesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Articles $Articles)
+    public function show($id, Articles $Articles)
     {
-        echo "Show";
+        $data = $Articles->where(["id"=>$id])->get();
+        return view("app",["title"=>(count($data) > 0)?$data[0]->title:"Article"]);
     }
 
     /**

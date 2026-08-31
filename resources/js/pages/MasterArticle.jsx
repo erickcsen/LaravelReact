@@ -374,6 +374,7 @@ master.article = (loading, dataArticle)=>{
 }
 
 export default function MasterArticle() {
+    document.title = "Master Article";
     const { page, parameter_id } = useParams();
     const [id, setID] = useState(parameter_id);
     const navigate = useNavigate();

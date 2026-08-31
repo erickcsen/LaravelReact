@@ -230,7 +230,7 @@ master.update = (handleSubmit, category_list, dataArticle, defaultImg, setDefaul
             <Row>
                 <Col>
                     <sup><Link to="/master-articles" style={{textDecoration:"none"}}>Master Articles</Link> &gt;
-                    <Link to={"/master-article/"+article.id} style={{textDecoration:"none"}}>{article.title}</Link> &gt; Edit </sup> <br />
+                    <Link to={"/master-articles/article/"+article.id} style={{textDecoration:"none"}}>{article.title}</Link> &gt; Edit </sup> <br />
                     <b className="h5">
                         Edit Article
                     </b>

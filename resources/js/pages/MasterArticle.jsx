@@ -172,7 +172,7 @@ export default function MasterArticle() {
                                 <Col xs="12" md="8" lg="9">
                                     <label>Title</label>
                                     <div className="input-group">
-                                        <Form.Control type="text" placeholder="Input title" isInvalid={!!errors.title} defaultValue={form.title} onChange={(e) => {setForm({...form, title: e.target.value}); setErrors({...errors, title:""})}}/>
+                                        <Form.Control type="text" placeholder="Input title" isInvalid={!!errors.title} value={form.title} onChange={(e) => {setForm({...form, title: e.target.value}); setErrors({...errors, title:""})}}/>
                                     </div>
                                     {errors.title && <div className="text-danger">{errors.title[0]}</div>}
                                 </Col>
@@ -312,7 +312,7 @@ export default function MasterArticle() {
                                     <Col xs="12" md="8" lg="9">
                                         <label>Title</label>
                                         <div className="input-group">
-                                            <Form.Control type="text" placeholder="Input title" isInvalid={!!errors.title} defaultValue={form.title} onChange={(e) => {setForm({...form, title: e.target.value}); setErrors({...errors, title:""})}}/>
+                                            <Form.Control type="text" placeholder="Input title" isInvalid={!!errors.title} value={form.title} onChange={(e) => {setForm({...form, title: e.target.value}); setErrors({...errors, title:""})}}/>
                                         </div>
                                         {errors.title && <div className="text-danger">{errors.title[0]}</div>}
                                     </Col>

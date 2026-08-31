@@ -63,11 +63,11 @@ master.toast = (errors, successMessage, errorMessage, showToast, setShowToast)=>
     </ToastContainer>
 </>
 
-master.loading = <Row>
+master.loading = <Col xs={12}>
     <h1 className="text-center" style={{marginTop:"10vh"}}>
         <BlinkBlur color="#ffac00" size="large" text="Loading" textColor="" /> <br />
     </h1>
-</Row>
+</Col>
 
 master.articleEmpty = <Row>
     <p className="text-center" style={{marginTop:"10vh",fontSize:"14pt"}}>
@@ -98,31 +98,28 @@ master.list = (setID, visitArticle) => {
     }; useEffect(() => {handlePagination()});
 
     const showData = <>
-        <Row>
-            {dataArticle.data.map((data) => (
-                <Col xs="12" md="6" lg="3" key={data.id} className="pt-3">
-                    <Link to={"/master-articles/article/"+""+data.id} onClick={()=>{setID(data.id);visitArticle(true)}} style={{textDecoration:"none",color:"inherit"}}>
-                        <div className="border">
-                            <div>
-                                <div style={{backgroundImage:"url("+domain+'/'+data.image_url+")", height:"200px", backgroundSize:"100% 100%"}}></div>
-                            </div>
-                            <div className="p-2">
-                                <b style={{fontSize:"large"}} className="text-limit-title-card"> {data.title} </b>
-                                <div className="mt-2 text-limit" dangerouslySetInnerHTML={{__html: data.description}}></div>
-                            </div>
+        {dataArticle.data.map((data) => (
+            <Col xs="12" md="6" lg="4" xl="3" key={data.id} className="pt-3">
+                <Link to={"/master-articles/article/"+""+data.id} onClick={()=>{setID(data.id);visitArticle(true)}} style={{textDecoration:"none",color:"inherit"}}>
+                    <div className="border">
+                        <div>
+                            <div style={{backgroundImage:"url("+domain+'/'+data.image_url+")", height:"200px", backgroundSize:"100% 100%"}}></div>
                         </div>
-                    </Link>
-                </Col>
-            ))}
-        </Row>
-        <Row>
-            <Col className="mt-3 mb-3" style={{textAlign:"center"}}>
-                {dataArticle.links.map((data)=>{
-                    return <Button type="button" dangerouslySetInnerHTML={{__html: data.label}} className="btn btn-light border me-1" onClick={(e)=>{setLoading(true); if (data.url != null) seturlGetArticles(data.url);handlePagination(e)}} key={data.label}>
-                        </Button>
-                })}
+                        <div className="p-2">
+                            <b style={{fontSize:"large"}} className="text-limit-title-card"> {data.title} </b>
+                            <div className="mt-2 text-limit" dangerouslySetInnerHTML={{__html: data.description}}></div>
+                        </div>
+                    </div>
+                </Link>
             </Col>
-        </Row>
+        ))}
+
+        <Col xs={12} className="mt-3 mb-3" style={{textAlign:"center"}}>
+            {dataArticle.links.map((data)=>{
+                return <Button type="button" dangerouslySetInnerHTML={{__html: data.label}} className="btn btn-light border me-1" onClick={(e)=>{setLoading(true); if (data.url != null) seturlGetArticles(data.url);handlePagination(e)}} key={data.label}>
+                    </Button>
+            })}
+        </Col>
     </>
 
     return <>
@@ -324,53 +321,53 @@ master.article = (loading, dataArticle)=>{
     const showData = <>
         {dataArticle.data.map((data) => {
             return <Col key={data.id}>
-                <Row>
-                    <Col xs={12}>
-                        <div className="container mt-3 d-none d-md-block" style={{position:"absolute",left:"0",right:"0"}}>
-                            <div style={{float:"right"}}>
-                                <Link to={"/master-articles/edit/"+data.id+""}>
-                                    <Button className="btn btn-light border">
-                                        <i className="fa fa-edit"></i> Edit
-                                    </Button>
-                                </Link> &nbsp;
-                                <Button className="btn btn-danger">
-                                    <i className="fa fa-trash"></i> Delete
+                <Col xs={12}>
+                    <div className="container mt-3 d-none d-md-block" style={{position:"absolute",left:"0",right:"0"}}>
+                        <div style={{float:"right"}}>
+                            <Link to={"/master-articles/edit/"+data.id+""}>
+                                <Button className="btn btn-light border">
+                                    <i className="fa fa-edit"></i> Edit
                                 </Button>
-                            </div>
+                            </Link> &nbsp;
+                            <Button className="btn btn-danger">
+                                <i className="fa fa-trash"></i> Delete
+                            </Button>
                         </div>
-                        <div className="position-fixed end-0 start-0 bottom-0 border py-2 bg-white d-block d-md-none px-3" style={{zIndex:"1000"}}>
-                            <div style={{float:"left"}}>
-                                <Link to="/master-articles" className="btn btn-light border">
-                                    <i className="fa fa-angle-left"></i> Back
-                                </Link>
-                            </div>
-                            <div style={{float:"right"}}>
-                                <Link to={"/master-articles/edit/"+data.id+""}>
-                                    <Button className="btn btn-light border">
-                                        <i className="fa fa-edit"></i> Edit
-                                    </Button>
-                                </Link> &nbsp;
-                                <Button className="btn btn-danger">
-                                    <i className="fa fa-trash"></i> Delete
+                    </div>
+                    <div className="position-fixed end-0 start-0 bottom-0 border py-2 bg-white d-block d-md-none px-3" style={{zIndex:"1000"}}>
+                        <div style={{float:"left"}}>
+                            <Link to="/master-articles" className="btn btn-light border">
+                                <i className="fa fa-angle-left"></i> Back
+                            </Link>
+                        </div>
+                        <div style={{float:"right"}}>
+                            <Link to={"/master-articles/edit/"+data.id+""}>
+                                <Button className="btn btn-light border">
+                                    <i className="fa fa-edit"></i> Edit
                                 </Button>
-                            </div>
+                            </Link> &nbsp;
+                            <Button className="btn btn-danger">
+                                <i className="fa fa-trash"></i> Delete
+                            </Button>
                         </div>
-                        <div style={{background:"url('"+domain + "/" + data.image_url+"')",height:"300px",backgroundSize:"auto 100%",backgroundPosition:"center",backgroundRepeat:"no-repeat"}}>
-                        </div>
-                    </Col>
-                    <Col xs={12} style={{paddingBottom:"66px"}}>
-                        <h3 className="mt-2">{data.title}</h3>
-                        <div dangerouslySetInnerHTML={{__html:data.description}}>
-                        </div>
-                    </Col>
-                </Row>
+                    </div>
+                    <div style={{background:"url('"+domain + "/" + data.image_url+"')",height:"300px",backgroundSize:"auto 100%",backgroundPosition:"center",backgroundRepeat:"no-repeat"}}>
+                    </div>
+                </Col>
+                <Col xs={12} style={{paddingBottom:"66px"}}>
+                    <h3 className="mt-2">{data.title}</h3>
+                    <div dangerouslySetInnerHTML={{__html:data.description}}>
+                    </div>
+                </Col>
             </Col>
         })}
     </>
 
     return <>
         <Row>
-            <sup><Link to="/master-articles" style={{textDecoration:"none"}}>Master Articles</Link> &gt; {title} </sup> <br />
+            <Col>
+                <sup><Link to="/master-articles" style={{textDecoration:"none"}}>Master Articles</Link> &gt; {title} </sup> <br />
+            </Col>
         </Row>
         <Row>
             {(loading) ? master.loading : showData}

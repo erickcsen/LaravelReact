@@ -1,12 +1,22 @@
+import { useState, useEffect } from "react";
 import NavBar from "./Layouts/NavbarMenu"
+import { Container, Row, Col, Button } from "react-bootstrap"
+import { Link, useParams, useNavigate, data } from "react-router-dom"
+import Form from 'react-bootstrap/Form'
+
+import api from "../api";
+import Toast from "react-bootstrap/Toast";
+import ToastContainer from "react-bootstrap/ToastContainer";
+
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { OrbitProgress, Commet, Atom, BlinkBlur } from "react-loading-indicators";
 
 const API_ARTICLE_LIST = "/master-articles/article/list";
 const URL = {
     store: "/master-articles",
     update: "/master-articles/update",
 };
-
-const Master = {article:null, create:null, update:null, list:null, loading:{index:null, article:null}}
 
 const initialForm = {
     title: "",
@@ -26,63 +36,23 @@ const initialErrors = {
     message: "",
 };
 
-Master.loading.index = () => <>
-    <NavBar />
-    <Container>
-        <Row>
-            <Col>
-                <b className="h5">
-                    Master Article
-                </b>
-            </Col>
-        </Row>
-        <Row>
-            <Col>
-                <Link to="/master-articles/create" className="btn btn-primary mt-3">New Article</Link>
-            </Col>
-            <h1 className="text-center" style={{marginTop:"10vh"}}>
-                <BlinkBlur color="#ffac00" size="large" text="Loading" textColor="" /> <br />
-            </h1>
-        </Row>
-    </Container>
-</>
-
-Master.loading.article = () => <>
-    <NavBar />
-    <Container>
-        <Row>
-            <Col>
-                <sup><Link to="/master-articles" style={{textDecoration:"none"}}>Master Articles</Link> &gt; Article </sup> <br />
-                <h1 className="text-center" style={{marginTop:"10vh"}}>
-                    <BlinkBlur color="#ffac00" size="large" text="Loading" textColor="" /> <br />
-                </h1>
-            </Col>
-        </Row>
-    </Container>
-</>
-
-Master.list = ()=>{
-    return ;
-}
-
-Master.article = ()=>{
-    return ;
-}
-
-Master.create = ()=>{
-    return ;
-}
-
-Master.update = ()=>{
-    return ;
-}
-
 export default function MasterArticle() {
     const { page, parameter_id } = useParams();
     const navigate = useNavigate();
 
-    return (page == "create")? Master.create
-        : (page == "edit") ? Master.update
-        : (page == "article") ? Master.article
-        : Master.list;
+    const [loading, setLoading] = useState(true);
+    const [defaultImg, setDefaultImg] = useState("");
+    const [dataArticle, setDataArticle] = useState({data:[]});
+
+    const option = {
+
+        articleEmpty:dataArticle.data.length > 0 == true
+    }
+
+    return <>
+        <NavBar />
+        <Container>
+            {(option.loading)?<></>:(option.articleEmpty)?<></>:<></>}
+        </Container>
+    </>
 }

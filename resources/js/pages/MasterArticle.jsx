@@ -209,12 +209,12 @@ master.create = (handleSubmit, category_list) => {
     </>
 }
 
-master.update = (handleSubmit, category_list, dataArticle, defaultImg, setDefaultImg) => {
+master.update = (handleSubmit, category_list, dataArticle, defaultImg, setDefaultImg, loading) => {
     const [form, setForm] = useState(initialForm);
     const [errors, setErrors] = useState(initialErrors);
     const [showToast, setShowToast] = useState(false);
     const article = (dataArticle?.data.length > 0) ? dataArticle.data[0] : {};
-    return <>
+    const showForm = <>
         <form onSubmit={(e)=>handleSubmit(e, form, setErrors, setShowToast)}>
             <Row>
                 <Col>
@@ -308,6 +308,16 @@ master.update = (handleSubmit, category_list, dataArticle, defaultImg, setDefaul
         </form>
         {master.toast(errors, "Update Success", "Update Failed", showToast, setShowToast)}
     </>
+    const showLoading = <Row>
+        <Col>
+            <div className="text-limit-title-card" style={{fontSize:'8pt'}}>
+                <Link to="/master-articles" style={{textDecoration:"none"}}>Master Articles</Link> &gt; Article
+            </div>
+            {master.loading}
+        </Col>
+    </Row>
+
+    return (loading) ? showLoading : showForm;
 }
 
 master.article = (loading, dataArticle)=>{
@@ -457,7 +467,7 @@ export default function MasterArticle() {
             <Row className={(option.list)?"":"d-none"}>{master.list(setID, setLoading)}</Row>
             <Row className={(option.create)?"":"d-none"}>{master.create(handleSubmit, category_list)}</Row>
             <Row className={(option.article)?"":"d-none"}>{master.article(loading, dataArticle, getDataArticle)}</Row>
-            <Row className={(option.update)?"":"d-none"}>{master.update(handleSubmit, category_list, dataArticle, defaultImg, setDefaultImg)}</Row>
+            <Row className={(option.update)?"":"d-none"}>{master.update(handleSubmit, category_list, dataArticle, defaultImg, setDefaultImg, loading)}</Row>
         </Container>
     </>
 }

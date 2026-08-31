@@ -112,7 +112,7 @@ class ArticlesController extends Controller
         $data->category_id = $category;
         if (($request->image == null) == false) $data->image_url = 'storage/' . $path;
         //$data->update();
-        return $response->json(["message"=>"success update article"]);
+        return response()->json(["message"=>"success update article"]);
     }
 
     /**

@@ -210,19 +210,10 @@ master.create = (handleSubmit, category_list) => {
 }
 
 master.update = (handleSubmit, category_list, dataArticle, defaultImg, setDefaultImg, loading) => {
-    const [form, setForm] = useState({});
+    const [form, setForm] = useState(initialForm);
     const [errors, setErrors] = useState(initialErrors);
     const [showToast, setShowToast] = useState(false);
     const article = (dataArticle?.data.length > 0) ? dataArticle.data[0] : {};
-    dataArticle.data.map((data)=>{
-        form.title=data.title;
-        form.category = data.category_id;
-        form.user = data.user_id;
-        form.defaultImg = domain+"/"+data.image_url;
-        if (form.content=="") {
-            form.content = data.description;
-        }
-    });
 
     const showForm = <>
         <form onSubmit={(e)=>handleSubmit(e, form, setErrors, setShowToast)}>
@@ -444,8 +435,8 @@ export default function MasterArticle() {
                 console.error({errors:errors});
                 setErrors(errors);
             } else {
-                console.log(error.response)
-                setErrors({message:error.response.data.message});
+                console.log(error?.response)
+                setErrors({message:error?.response?.data?.message});
             }
         }
     }

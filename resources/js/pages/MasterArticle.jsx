@@ -12,7 +12,7 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { OrbitProgress, Commet, Atom, BlinkBlur } from "react-loading-indicators";
 
-const URL = {
+const path = {
     store: "/master-articles",
     update: "/master-articles/update",
     list:"/master-articles/article/list"
@@ -81,7 +81,7 @@ master.articleEmpty = <Row>
 master.list = (setID, visitArticle) => {
     const [dataArticle, setDataArticle] = useState({data:[], links:[]});
     const [loading, setLoading] = useState(true);
-    const [urlGetArticles, setUrlGetArticles] = useState(URL.list);
+    const [urlGetArticles, seturlGetArticles] = useState(path.list);
 
     const handlePagination = async (e)=>{
         if (loading)
@@ -118,7 +118,7 @@ master.list = (setID, visitArticle) => {
         <Row>
             <Col className="mt-3 mb-3" style={{textAlign:"center"}}>
                 {dataArticle.links.map((data)=>{
-                    return <Button type="button" dangerouslySetInnerHTML={{__html: data.label}} className="btn btn-light border me-1" onClick={(e)=>{setLoading(true); if (data.url != null) setUrlGetArticles(data.url);handlePagination(e)}} key={data.label}>
+                    return <Button type="button" dangerouslySetInnerHTML={{__html: data.label}} className="btn btn-light border me-1" onClick={(e)=>{setLoading(true); if (data.url != null) seturlGetArticles(data.url);handlePagination(e)}} key={data.label}>
                         </Button>
                 })}
             </Col>
@@ -220,7 +220,106 @@ master.create = (handleSubmit, category_list) => {
     </>
 }
 
-master.article = (loading, dataArticle, getDataArticle)=>{
+master.update = (handleSubmit, category_list, dataArticle, defaultImg, setDefaultImg) => {
+    const [form, setForm] = useState(initialForm);
+    const [errors, setErrors] = useState(initialErrors);
+    const [showToast, setShowToast] = useState(false);
+    const article = (dataArticle?.data.length > 0) ? dataArticle.data[0] : {};
+    return <>
+        <form onSubmit={(e)=>handleSubmit(e, form, setErrors, setShowToast)}>
+            <Row>
+                <Col>
+                    <sup><Link to="/master-articles" style={{textDecoration:"none"}}>Master Articles</Link> &gt;
+                    <Link to={"/master-article/"+article.id} style={{textDecoration:"none"}}>{article.title}</Link> &gt; Edit </sup> <br />
+                    <b className="h5">
+                        Edit Article
+                    </b>
+                </Col>
+                <Col className="d-none d-xl-block">
+                    <button type="submit" className="btn btn-primary float-end">Save Article</button>
+                </Col>
+                <div className="position-fixed end-0 start-0 bottom-0 border py-2 bg-white d-block d-xl-none" style={{zIndex:"1000"}}>
+                    <button type="submit" className="btn btn-primary">Save Article</button>
+                    <Link to="/master-articles" className="btn btn-danger ms-3">Cancel</Link>
+                </div>
+            </Row>
+            <Row>
+                <Col xs={12} md={12} lg={12} xl={4}>
+                    <div
+                        style={{
+                            height: "100%",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center"
+                        }}
+                    >
+                        <div style={{textAlign:"center"}}>
+                            <img
+                                src={defaultImg}
+                                width="100%"
+                                className="rounded"
+                                alt=""
+                            /> <br/>
+                            <label className="btn btn-light mt-3" htmlFor="banner">
+                                Change Image
+                            </label>
+                        </div>
+                    </div>
+                </Col>
+                <Col className="pt-3" xs={12} md={12} lg={12} xl={8}>
+                    <input type="hidden" value={csrfToken}/>
+                    <Row>
+                        <Col xs="12" md="8" lg="9">
+                            <label>Title</label>
+                            <div className="input-group">
+                                <Form.Control type="text" placeholder="Input title" isInvalid={!!errors.title} value={article.title} onChange={(e) => {setForm({...form, title: e.target.value}); setErrors({...errors, title:""})}}/>
+                            </div>
+                            {errors.title && <div className="text-danger">{errors.title[0]}</div>}
+                        </Col>
+                        <Col xs="12" md="4" lg="3">
+                            <label>Category</label>
+                            <div className="input-group">
+                                <Form.Select value={article.category_id} onChange={(e) => {setForm({...form, category: e.target.value, statusCategory: (e.target.value=="New")?e.target.value:""});setErrors({...errors, category:""})}} isInvalid={!!errors.category} className={(form.statusCategory=="New")?"d-none":"rounded"} style={{textTransform:"capitalize"}}>
+                                    <option key={0} value="">-- Select Category --</option>
+                                    <option key={1} value="New">-- New Category --</option>
+                                    {category_list.map((item, index)=>(
+                                        <option key={index+1} value={item.id} style={{textTransform:"capitalize"}}>{item.title}</option>
+                                    ))}
+                                </Form.Select>
+                                <input onChange={(e) => {setForm({...form, category: e.target.value});setErrors({...errors, category:""})}} className={(form.statusCategory=="New")?"form-control rounded":"form-control d-none"} placeholder="Input new Category"/>
+                            </div>
+                            {errors.category && <div className="text-danger">{errors.category[0]}</div>}
+                        </Col>
+                        <Col xs="12" className={"mt-1 d-none"}>
+                            <label>Banner</label>
+                            <div className="input-group">
+                                <Form.Control type="file" id="banner" accept="image/*" onChange={(e)=>{setForm({...form, image: (e.target.files.length > 0)?e.target.files[0]:e.target.value});setDefaultImg(URL.createObjectURL(e.target.files[0])); setErrors({...errors, image:""})}} isInvalid={!!errors.image} />
+                            </div>
+                            {errors.image && <div className="text-danger">{errors.image[0]}</div>}
+                        </Col>
+                        <Col className={!errors.content ? "mt-3" : "mt-1"} style={{paddingBottom:"66px"}}>
+                            {errors.content && <div className="text-danger">{errors.content[0]}</div>}
+                            <Col className="p-0" style={(errors.content)?{border:"solid 1px red"}:{}}>
+                                <CKEditor
+                                    editor={ClassicEditor}
+                                    data={article.description}
+                                    onChange={(event, editor) => {
+                                        const data = editor.getData();
+                                        setForm({...form, content: data})
+                                        setErrors({...errors, content:""})
+                                    }}
+                                />
+                            </Col>
+                        </Col>
+                    </Row>
+                </Col>
+            </Row>
+        </form>
+        {master.toast(errors, "Update Success", "Update Failed", showToast, setShowToast)}
+    </>
+}
+
+master.article = (loading, dataArticle)=>{
     const title = (dataArticle.data.length > 0) ? dataArticle.data[0].title : "Article";
     const showData = <>
         {dataArticle.data.map((data) => {
@@ -314,7 +413,7 @@ export default function MasterArticle() {
         formData.append("statusCategory", form.statusCategory);
         await api.get("/sanctum/csrf-cookie");
         try {
-            const str_url = (page=="create")? URL.store : URL.update;
+            const str_url = (page=="create")? path.store : path.update;
             const response = (page=="create")? await api.post(str_url, formData): await api.put(str_url, formData);
             navigate("/master-articles");
 
@@ -347,14 +446,15 @@ export default function MasterArticle() {
 
     /** This Data for page Article and Edit  */
     const [dataArticle, setDataArticle] = useState({data:[]});
-    var [defaultImg, setDefaultImg] = useState("");
+    const [defaultImg, setDefaultImg] = useState("");
     const [loading, setLoading] = useState(true);
     const getDataArticle = async ()=>{
         if (loading && id != null)
-            api.get(URL.list, {
+            api.get(path.list, {
                 withCredentials: true, params:{id}
             })
             .then((response) => {
+                console.log({dataArticle:response.data})
                 setDataArticle(response.data);
                 if(response?.data?.data?.length > 0)
                     setDefaultImg(domain+"/"+response.data.data[0].image_url);
@@ -372,6 +472,7 @@ export default function MasterArticle() {
             <Row className={(option.list)?"":"d-none"}>{master.list(setID, setLoading)}</Row>
             <Row className={(option.create)?"":"d-none"}>{master.create(handleSubmit, category_list)}</Row>
             <Row className={(option.article)?"":"d-none"}>{master.article(loading, dataArticle, getDataArticle)}</Row>
+            <Row className={(option.update)?"":"d-none"}>{master.update(handleSubmit, category_list, dataArticle, defaultImg, setDefaultImg)}</Row>
         </Container>
     </>
 }

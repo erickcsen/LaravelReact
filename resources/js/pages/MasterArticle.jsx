@@ -368,7 +368,7 @@ export default function MasterArticle() {
     return <>
         <NavBar />
         <Container>
-            <Row className={(option.list)?"":"d-none"}>{master.list(setID, loadArticle)}</Row>
+            <Row className={(option.list)?"":"d-none"}>{master.list(setID, setLoading)}</Row>
             <Row className={(option.create)?"":"d-none"}>{master.create(handleSubmit, category_list)}</Row>
             <Row className={(option.article)?"":"d-none"}>{master.article(loading, dataArticle, getDataArticle)}</Row>
         </Container>

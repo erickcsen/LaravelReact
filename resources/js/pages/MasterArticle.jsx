@@ -345,6 +345,7 @@ export default function MasterArticle() {
         }
     }
 
+    /** This Data for page Article and Edit  */
     const [dataArticle, setDataArticle] = useState({data:[]});
     var [defaultImg, setDefaultImg] = useState("");
     const [loading, setLoading] = useState(true);
@@ -363,6 +364,7 @@ export default function MasterArticle() {
                 setLoading(false);
             })
     };useEffect(()=>getDataArticle);
+    /** This Data for page Article and Edit  */
 
     return <>
         <NavBar />

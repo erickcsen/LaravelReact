@@ -240,7 +240,7 @@ master.update = (handleSubmit, category_list, dataArticle, defaultImg, setDefaul
                 </Col>
                 <div className="position-fixed end-0 start-0 bottom-0 border py-2 bg-white d-block d-xl-none" style={{zIndex:"1000"}}>
                     <button type="submit" className="btn btn-primary">Save Article</button>
-                    <Link to="/master-articles" className="btn btn-danger ms-3">Cancel</Link>
+                    <Link to={"/master-articles/article/"+article.id} className="btn btn-danger ms-3">Cancel</Link>
                 </div>
             </Row>
             <Row>

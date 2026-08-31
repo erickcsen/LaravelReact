@@ -1,5 +1,11 @@
 import NavBar from "./Layouts/NavbarMenu"
 
+const API_ARTICLE_LIST = "/master-articles/article/list";
+const URL = {
+    store: "/master-articles",
+    update: "/master-articles/update",
+};
+
 const Master = {article:null, create:null, update:null, list:null, loading:{index:null, article:null}}
 
 const initialForm = {

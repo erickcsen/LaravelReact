@@ -320,58 +320,52 @@ master.article = (loading, dataArticle)=>{
     const title = (dataArticle.data.length > 0) ? dataArticle.data[0].title : "Article";
     const showData = <>
         {dataArticle.data.map((data) => {
-            return <Col key={data.id}>
-                <Col xs={12}>
-                    <div className="container mt-3 d-none d-md-block" style={{position:"absolute",left:"0",right:"0"}}>
-                        <div style={{float:"right"}}>
-                            <Link to={"/master-articles/edit/"+data.id+""}>
-                                <Button className="btn btn-light border">
-                                    <i className="fa fa-edit"></i> Edit
-                                </Button>
-                            </Link> &nbsp;
-                            <Button className="btn btn-danger">
-                                <i className="fa fa-trash"></i> Delete
+            return <Col xs={12}>
+                <div className="container mt-3 d-none d-md-block" style={{position:"absolute",left:"0",right:"0"}}>
+                    <div style={{float:"right"}}>
+                        <Link to={"/master-articles/edit/"+data.id+""}>
+                            <Button className="btn btn-light border">
+                                <i className="fa fa-edit"></i> Edit
                             </Button>
-                        </div>
+                        </Link> &nbsp;
+                        <Button className="btn btn-danger">
+                            <i className="fa fa-trash"></i> Delete
+                        </Button>
                     </div>
-                    <div className="position-fixed end-0 start-0 bottom-0 border py-2 bg-white d-block d-md-none px-3" style={{zIndex:"1000"}}>
-                        <div style={{float:"left"}}>
-                            <Link to="/master-articles" className="btn btn-light border">
-                                <i className="fa fa-angle-left"></i> Back
-                            </Link>
-                        </div>
-                        <div style={{float:"right"}}>
-                            <Link to={"/master-articles/edit/"+data.id+""}>
-                                <Button className="btn btn-light border">
-                                    <i className="fa fa-edit"></i> Edit
-                                </Button>
-                            </Link> &nbsp;
-                            <Button className="btn btn-danger">
-                                <i className="fa fa-trash"></i> Delete
+                </div>
+                <div className="position-fixed end-0 start-0 bottom-0 border py-2 bg-white d-block d-md-none px-3" style={{zIndex:"1000"}}>
+                    <div style={{float:"left"}}>
+                        <Link to="/master-articles" className="btn btn-light border">
+                            <i className="fa fa-angle-left"></i> Back
+                        </Link>
+                    </div>
+                    <div style={{float:"right"}}>
+                        <Link to={"/master-articles/edit/"+data.id+""}>
+                            <Button className="btn btn-light border">
+                                <i className="fa fa-edit"></i> Edit
                             </Button>
-                        </div>
+                        </Link> &nbsp;
+                        <Button className="btn btn-danger">
+                            <i className="fa fa-trash"></i> Delete
+                        </Button>
                     </div>
-                    <div style={{background:"url('"+domain + "/" + data.image_url+"')",height:"300px",backgroundSize:"auto 100%",backgroundPosition:"center",backgroundRepeat:"no-repeat"}}>
-                    </div>
-                </Col>
-                <Col xs={12} style={{paddingBottom:"66px"}}>
+                </div>
+                <div style={{background:"url('"+domain + "/" + data.image_url+"')",height:"300px",backgroundSize:"auto 100%",backgroundPosition:"center",backgroundRepeat:"no-repeat"}}>
+                </div>
+                <div style={{paddingBottom:"66px"}}>
                     <h3 className="mt-2">{data.title}</h3>
                     <div dangerouslySetInnerHTML={{__html:data.description}}>
                     </div>
-                </Col>
+                </div>
             </Col>
         })}
     </>
 
     return <>
-        <Row>
-            <Col>
-                <sup><Link to="/master-articles" style={{textDecoration:"none"}}>Master Articles</Link> &gt; {title} </sup> <br />
-            </Col>
-        </Row>
-        <Row>
-            {(loading) ? master.loading : showData}
-        </Row>
+        <p className="text-limit-title-card" style={{fontSize:"8pt"}}>
+            <Link to="/master-articles" style={{textDecoration:"none"}}>Master Articles</Link> &gt; {title}  <br />
+        </p>
+        {(loading) ? master.loading : showData}
     </>
 }
 

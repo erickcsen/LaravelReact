@@ -218,8 +218,10 @@ master.update = (handleSubmit, category_list, dataArticle, defaultImg, setDefaul
         <form onSubmit={(e)=>handleSubmit(e, form, setErrors, setShowToast)}>
             <Row>
                 <Col>
-                    <sup><Link to="/master-articles" style={{textDecoration:"none"}}>Master Articles</Link> &gt;
-                    <Link to={"/master-articles/article/"+article.id} style={{textDecoration:"none"}}>{article.title}</Link> &gt; Edit </sup> <br />
+                    <div className="text-limit-title-card" style={{fontSize:'8pt'}}>
+                        <Link to="/master-articles" style={{textDecoration:"none"}}>Master Articles</Link> &gt;
+                        <Link to={"/master-articles/article/"+article.id} style={{textDecoration:"none"}}>{article.title}</Link> &gt; Edit
+                    </div>
                     <b className="h5">
                         Edit Article
                     </b>
@@ -233,7 +235,7 @@ master.update = (handleSubmit, category_list, dataArticle, defaultImg, setDefaul
                 </div>
             </Row>
             <Row>
-                <Col xs={12} md={12} lg={12} xl={4}>
+                <Col xs={12} md={12} lg={12} xl={4} className="mt-2">
                     <div
                         style={{
                             height: "100%",
@@ -258,14 +260,14 @@ master.update = (handleSubmit, category_list, dataArticle, defaultImg, setDefaul
                 <Col className="pt-3" xs={12} md={12} lg={12} xl={8}>
                     <input type="hidden" value={csrfToken}/>
                     <Row>
-                        <Col xs="12" md="8" lg="9">
+                        <Col xs="12" md="8" lg="9" className={"mb-1"}>
                             <label>Title</label>
                             <div className="input-group">
                                 <Form.Control type="text" placeholder="Input title" isInvalid={!!errors.title} value={article.title} onChange={(e) => {setForm({...form, title: e.target.value}); setErrors({...errors, title:""})}}/>
                             </div>
                             {errors.title && <div className="text-danger">{errors.title[0]}</div>}
                         </Col>
-                        <Col xs="12" md="4" lg="3">
+                        <Col xs="12" md="4" lg="3" className={"mb-1"}>
                             <label>Category</label>
                             <div className="input-group">
                                 <Form.Select value={article.category_id} onChange={(e) => {setForm({...form, category: e.target.value, statusCategory: (e.target.value=="New")?e.target.value:""});setErrors({...errors, category:""})}} isInvalid={!!errors.category} className={(form.statusCategory=="New")?"d-none":"rounded"} style={{textTransform:"capitalize"}}>
@@ -279,7 +281,7 @@ master.update = (handleSubmit, category_list, dataArticle, defaultImg, setDefaul
                             </div>
                             {errors.category && <div className="text-danger">{errors.category[0]}</div>}
                         </Col>
-                        <Col xs="12" className={"mt-1 d-none"}>
+                        <Col xs="12" className="d-none">
                             <label>Banner</label>
                             <div className="input-group">
                                 <Form.Control type="file" id="banner" accept="image/*" onChange={(e)=>{setForm({...form, image: (e.target.files.length > 0)?e.target.files[0]:e.target.value});setDefaultImg(URL.createObjectURL(e.target.files[0])); setErrors({...errors, image:""})}} isInvalid={!!errors.image} />
@@ -342,11 +344,11 @@ master.article = (loading, dataArticle)=>{
                         </Button>
                     </div>
                 </div>
-                <div style={{background:"url('"+domain + "/" + data.image_url+"')",height:"300px",backgroundSize:"auto 100%",backgroundPosition:"center",backgroundRepeat:"no-repeat"}}>
+                <div className="rounded" style={{background:"url('"+domain + "/" + data.image_url+"')",height:"300px",backgroundSize:"auto 100%",backgroundPosition:"center",backgroundRepeat:"no-repeat"}}>
                 </div>
                 <div style={{paddingBottom:"66px"}}>
                     <h3 className="mt-2">{data.title}</h3>
-                    <div dangerouslySetInnerHTML={{__html:data.description}}>
+                    <div style={{textAlign:"justify"}} dangerouslySetInnerHTML={{__html:data.description}}>
                     </div>
                 </div>
             </Col>

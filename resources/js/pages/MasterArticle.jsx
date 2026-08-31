@@ -214,6 +214,15 @@ master.update = (handleSubmit, category_list, dataArticle, defaultImg, setDefaul
     const [errors, setErrors] = useState(initialErrors);
     const [showToast, setShowToast] = useState(false);
     const article = (dataArticle?.data.length > 0) ? dataArticle.data[0] : {};
+    dataArticle.data.map((data)=>{
+        form.title=data.title;
+        form.category = data.category_id;
+        form.defaultImg = domain+"/"+data.image_url;
+        if (form.content=="") {
+            form.content = data.description;
+        }
+    });
+    
     const showForm = <>
         <form onSubmit={(e)=>handleSubmit(e, form, setErrors, setShowToast)}>
             <Row>
@@ -324,7 +333,7 @@ master.article = (loading, dataArticle)=>{
     const title = (dataArticle.data.length > 0) ? dataArticle.data[0].title : "Article";
     const showData = <>
         {dataArticle.data.map((data) => {
-            return <Col xs={12}>
+            return <Col xs={12} key={data.id}>
                 <div className="container mt-3 d-none d-md-block" style={{position:"absolute",left:"0",right:"0"}}>
                     <div style={{float:"right"}}>
                         <Link to={"/master-articles/edit/"+data.id+""}>

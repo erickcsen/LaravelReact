@@ -123,10 +123,6 @@ master.list = () => {
 
 export default function MasterArticle() {
     const { page, parameter_id } = useParams();
-    const navigate = useNavigate();
-
-    const [defaultImg, setDefaultImg] = useState("");
-    const [dataArticle, setDataArticle] = useState({data:[]});
 
     const option = {
         create:page=="create", update:page=="edit", article:page=="article", list: page==null,

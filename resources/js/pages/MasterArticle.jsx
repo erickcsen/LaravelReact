@@ -12,10 +12,10 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { OrbitProgress, Commet, Atom, BlinkBlur } from "react-loading-indicators";
 
-const API_ARTICLE_LIST = "/master-articles/article/list";
 const URL = {
     store: "/master-articles",
     update: "/master-articles/update",
+    list:"/master-articles/article/list"
 };
 
 const initialForm = {

@@ -83,7 +83,36 @@ class ArticlesController extends Controller
      */
     public function update(Request $request, Articles $Articles)
     {
-        //
+
+        $request->validate([
+            "id"=>"required",
+            "title"=>"required",
+            "content"=>"required",
+            "user"=>"required",
+            "category"=>"required",
+            'image' => 'image|mimes:jpg,jpeg,png,webp|max:5120',
+            "statusCategory"=>"nullable"
+        ]);
+
+        $data = [];
+        $category = "";
+        if ($request->statusCategory == "New" && Category::where(["title"=>$request->category])->get()->count()==0){
+            $data = Category::create(["title"=>$request->category, "user_id"=>$request->user,  "description"=>""]);
+            $category = $data->id;
+        } else {
+            $category = Category::where(["id"=>$request->category])->orWhere(["title"=>$request->category])->get()[0]->id;
+        }
+
+        $path = "";
+        if (($request->image == null) == false) $path = $request->file('image')->store('images', 'public');
+
+        $data = Articles::findOrFail($request->id);
+        $data->title = $request->title;
+        $data->content = $request->content;
+        $data->category_id = $category;
+        if (($request->image == null) == false) $data->image_url = 'storage/' . $path;
+        //$data->update();
+        return $response->json(["message"=>"success update article"]);
     }
 
     /**

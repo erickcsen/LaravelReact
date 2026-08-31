@@ -37,7 +37,7 @@ export default function MasterArticle() {
         title:"",
         content:"",
         user:(window.AppData.user)?window.AppData.user.id:"",
-        image:[],
+        image:null,
         category:"",
         statusCategory:"",
         defaultImg:""
@@ -56,13 +56,14 @@ export default function MasterArticle() {
     const [content, setContent] = useState("");
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(form);
+        console.log({...form, id:id});
 
         const formData = new FormData();
+        if (page) formData.append("id", id);
         formData.append("title", form.title);
         formData.append("content", form.content);
         formData.append("user", form.user);
-        formData.append("image", form.image);
+        if(form.image != null) formData.append("image", form.image);
         formData.append("category", form.category);
         formData.append("statusCategory", form.statusCategory);
 
@@ -171,7 +172,7 @@ export default function MasterArticle() {
                                 <Col xs="12" md="8" lg="9">
                                     <label>Title</label>
                                     <div className="input-group">
-                                        <Form.Control type="text" placeholder="Input title" isInvalid={!!errors.title} value={form.title} onChange={(e) => {setForm({...form, title: e.target.value}); setErrors({...errors, title:""})}}/>
+                                        <Form.Control type="text" placeholder="Input title" isInvalid={!!errors.title} defaultValue={form.title} onChange={(e) => {setForm({...form, title: e.target.value}); setErrors({...errors, title:""})}}/>
                                     </div>
                                     {errors.title && <div className="text-danger">{errors.title[0]}</div>}
                                 </Col>
@@ -274,19 +275,19 @@ export default function MasterArticle() {
                                     Edit Article
                                 </b>
                             </Col>
-                            <Col className="d-none d-md-block">
+                            <Col className="d-none d-lg-block">
                                 <button type="submit" className="btn btn-primary float-end">Save Article</button>
                             </Col>
-                            <div className="position-fixed end-0 start-0 bottom-0 border py-2 bg-white d-block d-md-none" style={{zIndex:"1000"}}>
+                            <div className="position-fixed end-0 start-0 bottom-0 border py-2 bg-white d-block d-lg-none" style={{zIndex:"1000"}}>
                                 <button type="submit" className="btn btn-primary">Save Article</button>
                                 <Link to="/master-articles" className="btn btn-danger ms-3">Cancel</Link>
                             </div>
                         </Row>
                         <Row>
-                            <Col xs={12} md={6} lg={5} xl={4}>
+                            <Col xs={12} md={12} lg={5} xl={4}>
                                 <div
                                     style={{
-                                        height: "90%",
+                                        height: "100%",
                                         display: "flex",
                                         alignItems: "center",
                                         justifyContent: "center"
@@ -305,13 +306,13 @@ export default function MasterArticle() {
                                     </div>
                                 </div>
                             </Col>
-                            <Col className="pt-3" xs={12} md={6} lg={7} xl={8}>
+                            <Col className="pt-3" xs={12} md={12} lg={7} xl={8}>
                                 <input type="hidden" value={csrfToken}/>
                                 <Row>
                                     <Col xs="12" md="8" lg="9">
                                         <label>Title</label>
                                         <div className="input-group">
-                                            <Form.Control type="text" placeholder="Input title" isInvalid={!!errors.title} value={form.title} onChange={(e) => {setForm({...form, title: e.target.value}); setErrors({...errors, title:""})}}/>
+                                            <Form.Control type="text" placeholder="Input title" isInvalid={!!errors.title} defaultValue={form.title} onChange={(e) => {setForm({...form, title: e.target.value}); setErrors({...errors, title:""})}}/>
                                         </div>
                                         {errors.title && <div className="text-danger">{errors.title[0]}</div>}
                                     </Col>

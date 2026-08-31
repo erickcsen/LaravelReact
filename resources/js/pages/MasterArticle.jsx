@@ -39,28 +39,29 @@ const initialErrors = {
 
 const master = {loading:null, articleEmpty:null, list: null}
 
-master.loading = <>
+master.loading = <Row>
     <h1 className="text-center" style={{marginTop:"10vh"}}>
         <BlinkBlur color="#ffac00" size="large" text="Loading" textColor="" /> <br />
     </h1>
-</>
+</Row>
 
-master.articleEmpty = <>
+master.articleEmpty = <Row>
     <p className="text-center" style={{marginTop:"10vh",fontSize:"14pt"}}>
         <i className="fa fa-filter" style={{fontSize:"100px"}}></i><br/>
         <b>
             Tidak Ada Data
         </b>
     </p>
-</>
+</Row>
 
 master.list = () => {
-    const [dataArticle, setDataArticle] = useState({data:[]});
+    const [dataArticle, setDataArticle] = useState({data:[], links:[]});
     const [loading, setLoading] = useState(true);
+    const [urlGetArticles, setUrlGetArticles] = useState(URL.list);
 
     const handlePagination = async (e)=>{
         if (loading)
-            api.get(URL.list, {
+            api.get(urlGetArticles, {
                 withCredentials: true,
             })
             .then((response) => {
@@ -73,22 +74,7 @@ master.list = () => {
             });
     }; useEffect(() => {handlePagination()});
 
-    return <>
-        <Row>
-            <Col>
-                <b className="h5">
-                    Master Article
-                </b>
-            </Col>
-        </Row>
-        <Row>
-            <Col>
-                <Link to="/master-articles/create" className="btn btn-primary mt-3">New Article</Link>
-            </Col>
-        </Row>
-        <Row>
-            {(loading)?master.loading:(dataArticle.data.length == 0)?master.articleEmpty:""}
-        </Row>
+    const showData = <>
         <Row>
             {dataArticle.data.map((data) => (
                 <Col xs="12" md="6" lg="3" key={data.id} className="pt-3">
@@ -105,6 +91,32 @@ master.list = () => {
                     </Link>
                 </Col>
             ))}
+        </Row>
+        <Row>
+            <Col className="mt-3 mb-3" style={{textAlign:"center"}}>
+                {dataArticle.links.map((data)=>{
+                    return <Button type="button" dangerouslySetInnerHTML={{__html: data.label}} className="btn btn-light border me-1" onClick={(e)=>{setLoading(true); if (data.url != null) setUrlGetArticles(data.url);handlePagination(e)}} key={data.label}>
+                        </Button>
+                })}
+            </Col>
+        </Row>
+    </>
+
+    return <>
+        <Row>
+            <Col>
+                <b className="h5">
+                    Master Article
+                </b>
+            </Col>
+        </Row>
+        <Row>
+            <Col>
+                <Link to="/master-articles/create" className="btn btn-primary mt-3">New Article</Link>
+            </Col>
+        </Row>
+        <Row>
+            {(loading)?master.loading:(dataArticle.data.length == 0)?master.articleEmpty:showData}
         </Row>
     </>
 }

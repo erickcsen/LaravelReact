@@ -17,6 +17,7 @@ const URL = {
     update: "/master-articles/update",
     list:"/master-articles/article/list"
 };
+const domain = window.location.origin;
 
 const initialForm = {
     title: "",
@@ -36,23 +37,93 @@ const initialErrors = {
     message: "",
 };
 
+const master = {loading:null, articleEmpty:null, list: null}
+
+master.loading = <>
+    <h1 className="text-center" style={{marginTop:"10vh"}}>
+        <BlinkBlur color="#ffac00" size="large" text="Loading" textColor="" /> <br />
+    </h1>
+</>
+
+master.articleEmpty = <>
+    <p className="text-center" style={{marginTop:"10vh",fontSize:"14pt"}}>
+        <i className="fa fa-filter" style={{fontSize:"100px"}}></i><br/>
+        <b>
+            Tidak Ada Data
+        </b>
+    </p>
+</>
+
+master.list = () => {
+    const [dataArticle, setDataArticle] = useState({data:[]});
+    const [loading, setLoading] = useState(true);
+
+    const handlePagination = async (e)=>{
+        if (loading)
+            api.get(URL.list, {
+                withCredentials: true,
+            })
+            .then((response) => {
+                console.log({dataWithPagination:response});
+                setDataArticle(response.data);
+            }).catch((errors)=>{
+                console.log(errors);
+            }).finally(()=>{
+                setLoading(false);
+            });
+    }; useEffect(() => {handlePagination()});
+
+    return <>
+        <Row>
+            <Col>
+                <b className="h5">
+                    Master Article
+                </b>
+            </Col>
+        </Row>
+        <Row>
+            <Col>
+                <Link to="/master-articles/create" className="btn btn-primary mt-3">New Article</Link>
+            </Col>
+        </Row>
+        <Row>
+            {(loading)?master.loading:(dataArticle.data.length == 0)?master.articleEmpty:""}
+        </Row>
+        <Row>
+            {dataArticle.data.map((data) => (
+                <Col xs="12" md="6" lg="3" key={data.id} className="pt-3">
+                    <Link to={"/master-articles/article/"+""+data.id} style={{textDecoration:"none",color:"inherit"}} onClick={(e)=>{setLoading(true);setID(data.id);getDataArticle();}}>
+                        <div className="border">
+                            <div>
+                                <div style={{backgroundImage:"url("+domain+'/'+data.image_url+")", height:"200px", backgroundSize:"100% 100%"}}></div>
+                            </div>
+                            <div className="p-2">
+                                <b style={{fontSize:"large"}} className="text-limit-title-card"> {data.title} </b>
+                                <div className="mt-2 text-limit" dangerouslySetInnerHTML={{__html: data.description}}></div>
+                            </div>
+                        </div>
+                    </Link>
+                </Col>
+            ))}
+        </Row>
+    </>
+}
+
 export default function MasterArticle() {
     const { page, parameter_id } = useParams();
     const navigate = useNavigate();
 
-    const [loading, setLoading] = useState(true);
     const [defaultImg, setDefaultImg] = useState("");
     const [dataArticle, setDataArticle] = useState({data:[]});
 
     const option = {
-
-        articleEmpty:dataArticle.data.length > 0 == true
-    }
+        create:page=="create", update:page=="edit", article:page=="article", list: page==null,
+    };
 
     return <>
         <NavBar />
         <Container>
-            {(option.loading)?<></>:(option.articleEmpty)?<></>:<></>}
+            {(option.list)?master.list():""}
         </Container>
     </>
 }

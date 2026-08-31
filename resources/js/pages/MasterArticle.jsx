@@ -89,7 +89,6 @@ master.list = (setID, visitArticle) => {
                 withCredentials: true,
             })
             .then((response) => {
-                console.log({dataWithPagination:response});
                 setDataArticle(response.data);
             }).catch((errors)=>{
                 console.log(errors);

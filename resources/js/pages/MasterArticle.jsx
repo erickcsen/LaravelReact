@@ -123,21 +123,13 @@ master.list = (setID, visitArticle) => {
     </>
 
     return <>
-        <Row>
-            <Col>
-                <b className="h5">
-                    Master Article
-                </b>
-            </Col>
-        </Row>
-        <Row>
-            <Col>
-                <Link to="/master-articles/create" className="btn btn-primary mt-3">New Article</Link>
-            </Col>
-        </Row>
-        <Row>
-            {(loading)?master.loading:(dataArticle.data.length == 0)?master.articleEmpty:showData}
-        </Row>
+        <div>
+            <b className="h5">
+                Master Article
+            </b><br/>
+            <Link to="/master-articles/create" className="btn btn-primary mt-3">New Article</Link>
+        </div>
+        {(loading)?master.loading:(dataArticle.data.length == 0)?master.articleEmpty:showData}
     </>
 }
 

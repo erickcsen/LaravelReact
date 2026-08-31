@@ -222,7 +222,6 @@ master.create = (handleSubmit, category_list) => {
 }
 
 master.article = (loading, dataArticle, getDataArticle)=>{
-    useEffect(()=>getDataArticle);
     const title = (dataArticle.data.length > 0) ? dataArticle.data[0].title : "Article";
     const showData = <>
         {dataArticle.data.map((data) => {
@@ -364,7 +363,7 @@ export default function MasterArticle() {
             }).finally(()=>{
                 setLoading(false);
             })
-    };
+    };useEffect(()=>getDataArticle);
 
     return <>
         <NavBar />

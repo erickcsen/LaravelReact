@@ -214,6 +214,18 @@ master.update = (handleSubmit, category_list, dataArticle, defaultImg, setDefaul
     const [errors, setErrors] = useState(initialErrors);
     const [showToast, setShowToast] = useState(false);
     const article = (dataArticle?.data.length > 0) ? dataArticle.data[0] : {};
+    useEffect(() => {
+        if (article.id) {
+            setForm({
+                title: article.title || "",
+                content: article.description || "",
+                user: article.user_id || "",
+                image: null,
+                category: article.category_id || "",
+                statusCategory: "",
+            });
+        }
+    }, [article]);
 
     const showForm = <>
         <form onSubmit={(e)=>handleSubmit(e, form, setErrors, setShowToast)}>
@@ -264,14 +276,14 @@ master.update = (handleSubmit, category_list, dataArticle, defaultImg, setDefaul
                         <Col xs="12" md="8" lg="9" className={"mb-1"}>
                             <label>Title</label>
                             <div className="input-group">
-                                <Form.Control type="text" placeholder="Input title" isInvalid={!!errors.title} value={article.title} onChange={(e) => {setForm({...form, title: e.target.value}); setErrors({...errors, title:""})}}/>
+                                <Form.Control type="text" placeholder="Input title" isInvalid={!!errors.title} value={form.title} onChange={(e) => {setForm({...form, title: e.target.value}); setErrors({...errors, title:""})}}/>
                             </div>
                             {errors.title && <div className="text-danger">{errors.title[0]}</div>}
                         </Col>
                         <Col xs="12" md="4" lg="3" className={"mb-1"}>
                             <label>Category</label>
                             <div className="input-group">
-                                <Form.Select value={article.category_id} onChange={(e) => {setForm({...form, category: e.target.value, statusCategory: (e.target.value=="New")?e.target.value:""});setErrors({...errors, category:""})}} isInvalid={!!errors.category} className={(form.statusCategory=="New")?"d-none":"rounded"} style={{textTransform:"capitalize"}}>
+                                <Form.Select value={form.category} onChange={(e) => {setForm({...form, category: e.target.value, statusCategory: (e.target.value=="New")?e.target.value:""});setErrors({...errors, category:""})}} isInvalid={!!errors.category} className={(form.statusCategory=="New")?"d-none":"rounded"} style={{textTransform:"capitalize"}}>
                                     <option key={0} value="">-- Select Category --</option>
                                     <option key={1} value="New">-- New Category --</option>
                                     {category_list.map((item, index)=>(
@@ -294,7 +306,7 @@ master.update = (handleSubmit, category_list, dataArticle, defaultImg, setDefaul
                             <Col className="p-0" style={(errors.content)?{border:"solid 1px red"}:{}}>
                                 <CKEditor
                                     editor={ClassicEditor}
-                                    data={article.description}
+                                    data={form.content}
                                     onChange={(event, editor) => {
                                         const data = editor.getData();
                                         setForm({...form, content: data})
